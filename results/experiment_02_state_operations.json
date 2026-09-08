@@ -1,0 +1,110 @@
+{
+  "experiment": "PointProgrammerNet streaming state operations",
+  "model": "PointProgrammerNet (fwp_dual_read_partition_multiscale_seg checkpoint)",
+  "samples": 32,
+  "points_per_sample": 1024,
+  "frames": 16,
+  "points_per_frame": 64,
+  "decay": 0.9,
+  "device": "cuda",
+  "operations": {
+    "append": {
+      "mean_relative_error": 2.3607543653270113e-07,
+      "max_relative_error": 4.779725486514508e-07
+    },
+    "merge": {
+      "mean_relative_error": 2.3578670038659766e-07,
+      "max_relative_error": 4.63714428633466e-07
+    },
+    "remove": {
+      "mean_relative_error": 3.2271620398205414e-07,
+      "max_relative_error": 8.853054964674811e-07
+    },
+    "decay": {
+      "mean_relative_error": 1.9215455893117905e-07,
+      "max_relative_error": 3.47243229725791e-07
+    }
+  },
+  "state_norm_curve": [
+    {
+      "frame": 1,
+      "additive": 1.0,
+      "decay": 1.0
+    },
+    {
+      "frame": 2,
+      "additive": 1.9091172218322754,
+      "decay": 1.8146530389785767
+    },
+    {
+      "frame": 3,
+      "additive": 2.835306406021118,
+      "decay": 2.5651228427886963
+    },
+    {
+      "frame": 4,
+      "additive": 3.740274429321289,
+      "decay": 3.2189364433288574
+    },
+    {
+      "frame": 5,
+      "additive": 4.608391761779785,
+      "decay": 3.7710251808166504
+    },
+    {
+      "frame": 6,
+      "additive": 5.498307228088379,
+      "decay": 4.289351463317871
+    },
+    {
+      "frame": 7,
+      "additive": 6.370540618896484,
+      "decay": 4.738584041595459
+    },
+    {
+      "frame": 8,
+      "additive": 7.3109211921691895,
+      "decay": 5.212782859802246
+    },
+    {
+      "frame": 9,
+      "additive": 8.19803237915039,
+      "decay": 5.585857391357422
+    },
+    {
+      "frame": 10,
+      "additive": 9.103282928466797,
+      "decay": 5.938331604003906
+    },
+    {
+      "frame": 11,
+      "additive": 10.01713752746582,
+      "decay": 6.265013217926025
+    },
+    {
+      "frame": 12,
+      "additive": 10.93720817565918,
+      "decay": 6.565975189208984
+    },
+    {
+      "frame": 13,
+      "additive": 11.823141098022461,
+      "decay": 6.799506187438965
+    },
+    {
+      "frame": 14,
+      "additive": 12.742244720458984,
+      "decay": 7.043332099914551
+    },
+    {
+      "frame": 15,
+      "additive": 13.670167922973633,
+      "decay": 7.273780822753906
+    },
+    {
+      "frame": 16,
+      "additive": 14.5689697265625,
+      "decay": 7.450837135314941
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "experiment": "PointProgrammerNet additive streaming and fixed state",
+  "model": "PointProgrammerNet (fwp_dual_read_partition_multiscale_seg checkpoint)",
+  "checkpoint": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts_seg\\partition_multiscale_full\\checkpoints\\fwp_dual_read_partition_multiscale_seg_seed0.pt",
+  "device": "cuda",
+  "dtype": "torch.float32",
+  "samples": 32,
+  "points_per_sample": 1024,
+  "state_shapes": {
+    "main": [
+      128,
+      170
+    ],
+    "fine": [
+      128,
+      170
+    ],
+    "broad": [
+      128,
+      170
+    ]
+  },
+  "state_elements_per_sample": 65280,
+  "state_bytes_per_sample": 261120,
+  "state_kib_per_sample": 255.0,
+  "equivalence": {
+    "ordered": [
+      {
+        "chunks": 2,
+        "mean_relative_error": 3.196502120772493e-07,
+        "max_relative_error": 4.383824148135318e-07
+      },
+      {
+        "chunks": 4,
+        "mean_relative_error": 3.4624198974597675e-07,
+        "max_relative_error": 4.662516346343182e-07
+      },
+      {
+        "chunks": 8,
+        "mean_relative_error": 3.572081936908944e-07,
+        "max_relative_error": 4.7459087682000245e-07
+      },
+      {
+        "chunks": 16,
+        "mean_relative_error": 3.621208293225209e-07,
+        "max_relative_error": 4.818723482458154e-07
+      },
+      {
+        "chunks": 32,
+        "mean_relative_error": 3.6741187159350375e-07,
+        "max_relative_error": 4.897173084827955e-07
+      }
+    ],
+    "shuffled": [
+      {
+        "chunks": 2,
+        "mean_relative_error": 3.388558980077505e-07,
+        "max_relative_error": 4.6030928047002817e-07
+      },
+      {
+        "chunks": 4,
+        "mean_relative_error": 3.4682409477682086e-07,
+        "max_relative_error": 4.782793325830426e-07
+      },
+      {
+        "chunks": 8,
+        "mean_relative_error": 3.560116397238744e-07,
+        "max_relative_error": 4.743972397136531e-07
+      },
+      {
+        "chunks": 16,
+        "mean_relative_error": 3.616033268372121e-07,
+        "max_relative_error": 4.803616207027517e-07
+      },
+      {
+        "chunks": 32,
+        "mean_relative_error": 3.687520404582756e-07,
+        "max_relative_error": 4.7207356601575157e-07
+      }
+    ]
+  },
+  "per_state_max_error_at_32_chunks": {
+    "ordered": {
+      "main": 5.304339083522791e-07,
+      "fine": 4.978023753210437e-07,
+      "broad": 4.3076701672362105e-07
+    },
+    "shuffled": {
+      "main": 5.15550482305116e-07,
+      "fine": 4.778791549142625e-07,
+      "broad": 4.2869481831075973e-07
+    }
+  },
+  "memory_curve": [
+    {
+      "cumulative_points": 1024,
+      "pointprogrammer_state_bytes": 261120,
+      "raw_xyz_bytes": 12288
+    },
+    {
+      "cumulative_points": 2048,
+      "pointprogrammer_state_bytes": 261120,
+      "raw_xyz_bytes": 24576
+    },
+    {
+      "cumulative_points": 4096,
+      "pointprogrammer_state_bytes": 261120,
+      "raw_xyz_bytes": 49152
+    },
+    {
+      "cumulative_points": 8192,
+      "pointprogrammer_state_bytes": 261120,
+      "raw_xyz_bytes": 98304
+    },
+    {
+      "cumulative_points": 16384,
+      "pointprogrammer_state_bytes": 261120,
+      "raw_xyz_bytes": 196608
+    },
+    {
+      "cumulative_points": 32768,
+      "pointprogrammer_state_bytes": 261120,
+      "raw_xyz_bytes": 393216
+    },
+    {
+      "cumulative_points": 65536,
+      "pointprogrammer_state_bytes": 261120,
+      "raw_xyz_bytes": 786432
+    },
+    {
+      "cumulative_points": 131072,
+      "pointprogrammer_state_bytes": 261120,
+      "raw_xyz_bytes": 1572864
+    },
+    {
+      "cumulative_points": 262144,
+      "pointprogrammer_state_bytes": 261120,
+      "raw_xyz_bytes": 3145728
+    }
+  ],
+  "raw_xyz_crossover_points": 21760.0
+}

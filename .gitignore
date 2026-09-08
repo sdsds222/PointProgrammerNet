@@ -1,7 +1,0 @@
-__pycache__/
-*.pyc
-data/
-results/
-*.pt
-*.h5
-*.zip

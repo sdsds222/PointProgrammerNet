@@ -1,0 +1,17 @@
+\begin{table*}[t]
+\centering
+\caption{ModelNet40 classification with 1,024 points. Density denotes evaluation under the fixed density-gradient shift. PointProgrammerNet classifies from fixed-size FWP states after discarding the input points.}
+\label{tab:classification_accuracy}
+\begin{tabular}{lrrrr}
+\toprule
+Model & Clean (\%) & Density (\%) & Drop (pp) & Params \\
+\midrule
+Lightweight PointNet++ & 89.84 $\pm$ 0.43 & 85.47 $\pm$ 0.88 & 4.38 $\pm$ 1.18 & 207,784 \\
+Wider PointNet & 87.90 $\pm$ 0.27 & 87.55 $\pm$ 0.38 & 0.35 $\pm$ 0.12 & 442,838 \\
+PointProgrammerNet & 86.59 $\pm$ 0.23 & 82.47 $\pm$ 0.93 & 4.12 $\pm$ 0.71 & 529,426 \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+
+

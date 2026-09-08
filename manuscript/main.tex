@@ -1,0 +1,202 @@
+\documentclass[times,twocolumn,final,authoryear]{elsarticle}
+\usepackage{prletter}
+\usepackage{amsmath,amssymb,amsthm,bm,booktabs,graphicx,url}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\graphicspath{{../figures/}}
+\setlength{\emergencystretch}{1em}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Sstate}{\mathbf{S}}
+\newcommand{\vect}{\operatorname{vec}}
+
+\journal{Pattern Recognition Letters}
+
+\begin{document}
+\begin{frontmatter}
+\title{PointProgrammerNet: Fixed-state additive programs for streaming point-cloud understanding}
+
+\author[a]{Dian Yu\corref{cor1}}
+\ead{dian.yu2@student.unsw.edu.au}
+\cortext[cor1]{Corresponding author}
+\address[a]{University of New South Wales, Sydney, NSW 2052, Australia}
+
+\begin{abstract}
+Point-cloud networks usually obtain context by revisiting points, building neighborhoods, or taking a global maximum. These operations work well offline, but a growing stream must then retain or reprocess its history. PointProgrammerNet writes each observation into three fixed-size fast-weight-programmer (FWP) matrices. Continuous normalized keys and outer-product values make the states additive, so independently processed chunks can be merged, removed, or exponentially decayed. The model retains three $128\times170$ float32 states (255 KiB), regardless of point count. Segmentation reads the states at a requested coordinate, whereas classification uses the states alone after discarding all points. We prove permutation invariance, chunk equivalence, fixed memory, and continuous dependence on new evidence. With XYZ input, PointProgrammerNet reaches $92.90\%$ point accuracy, $82.39\%$ instance mIoU, and $78.68\%$ category mIoU on ShapeNetPart, and $86.59\%$ accuracy on ModelNet40. At 8,192 accumulated points, updating only the new chunk is $5.54\times$ faster than rebuilding the state, with relative error below $8\times10^{-7}$. These results quantify the accuracy cost and streaming benefit of replacing point-history access with a bounded additive state.
+\end{abstract}
+
+\begin{keyword}
+point clouds \sep streaming learning \sep additive state \sep fast-weight programmers \sep segmentation \sep classification
+\end{keyword}
+\end{frontmatter}
+
+\section{Introduction}
+A point cloud is an unordered set, but a sensor observes it over time. Processing within a frame should be independent of point order, and processing across frames should not require replaying the full history. PointNet~\cite{qi2017pointnet} obtains a global descriptor by symmetric maximum pooling, while PointNet++~\cite{qi2017pointnetplusplus} builds multiscale metric neighborhoods. Both are effective offline. However, a maximum is not an additive state: fixed summaries cannot generally support deletion, independent chunk merging, and continuously weighted evidence by simple addition.
+
+We study a stricter setting in which a point may be discarded immediately after it is written. Later computation accesses only fixed matrices, plus a query coordinate for segmentation. A learned key distributes each point across state rows, and a second-order value records mass, position, learned content, and cross moments. Summing these per-point writes produces a fixed-size state.
+
+Independent chunks can therefore be merged, a stored subset can be subtracted, and old evidence can be decayed. New points update the state without a pass over earlier observations. Segmentation reads a coordinate-conditioned field and stores no historical point features. Classification reads only state rows and discards the complete point list.
+
+Our contributions are:
+\begin{itemize}
+\item a three-scale second-order FWP state whose memory does not grow with the number of observed points;
+\item additive point writes that allow independently encoded chunks to be merged without replaying their contents;
+\item a coordinate-conditioned segmentation head and a state-only classification head, neither of which pools over decoded points;
+\item proofs and experiments covering additivity, state operations, accuracy, and update cost.
+\end{itemize}
+Our compact PointNet++ implementations are controlled baselines rather than claims of canonical reproduction. We use them to measure the accuracy cost of the fixed-state constraint.
+
+\section{Related Work}
+PointNet applies pointwise transforms followed by maximum pooling~\cite{qi2017pointnet}, and PointNet++ adds hierarchical metric neighborhoods~\cite{qi2017pointnetplusplus}. Deep Sets studies permutation-invariant functions built from sums~\cite{zaheer2017deepsets}, while Set Transformer uses attention and inducing points~\cite{lee2019settransformer}. Kernelized attention can be evaluated recurrently~\cite{katharopoulos2020transformers}, and fast-weight programmers express memory updates as additive outer products or delta corrections~\cite{schlag2021linear}. PointProgrammerNet adapts this idea to geometry: its fixed states store spatial and learned second-order statistics and remain usable after the input points are released. We evaluate classification on ModelNet40~\cite{wu20153dshapenets} and part segmentation on ShapeNetPart~\cite{yi2016scalable}, which is derived from ShapeNet~\cite{chang2015shapenet}.
+
+\section{Method}
+Let $X=\{\bm{x}_i\}_{i=1}^N$, $\bm{x}_i\in\R^3$. Reported models use XYZ; normals or other attributes may extend values without changing the algebra. We require
+\begin{equation}\Sstate(A\uplus B)=\Sstate(A)+\Sstate(B).\label{eq:add}\end{equation}
+Three fine, middle, and broad branches each use $R=128$ rows and $D=170$ columns. Their learnable radii start at $0.08,0.20,0.60$. \Cref{fig:architecture} summarizes the shared additive encoder and the two task-specific readouts.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\linewidth]{fig00_pointprogrammernet_architecture.pdf}
+\input{../figures/fig00_pointprogrammernet_architecture_caption.tex}
+\end{figure*}
+
+\subsection{Continuous keys and second-order writes}
+Branch $s$ has Sobol-initialized trainable centers $\bm c_{sj}$ and inverse bandwidth $\gamma_s$:
+\begin{align}
+\ell_{sj}(\bm x)&=-0.5\|\gamma_s(\bm x-\bm c_{sj})\|_2^2,\\
+k_{sj}(\bm x)&={\exp\ell_{sj}(\bm x)}/{\sum_{r=1}^R\exp\ell_{sr}(\bm x)}.\label{eq:key}
+\end{align}
+Thus every point continuously distributes unit mass across rows, without hard assignment or point comparison. A branch MLP gives $\bm g_s(\bm x)\in\R^{32}$ and
+\begin{equation}
+\begin{aligned}
+\bm v_s(\bm x)=[&1,\bm x,\bm g_s,\vect(\bm x\bm g_s^\top),\\
+&x^2,y^2,z^2,xy,xz,yz,\bm g_s\odot\bm g_s]\in\R^{170}.
+\end{aligned}
+\end{equation}
+The FWP is
+\begin{equation}
+\Sstate_s(X)=\sum_i\bm k_s(\bm x_i)\bm v_s(\bm x_i)^\top
+=\bm K_s^\top\bm V_s\in\R^{128\times170}.\label{eq:state}
+\end{equation}
+The mass column normalizes each row. The remaining columns provide centroids, feature means and deviations, centered spatial moments, and position--feature cross moments.
+
+\subsection{Segmentation readout}
+At query $\bm q$, $\bm a_s(\bm q)=\bm k_s(\bm q)^\top\Sstate_s$. Density-normalized, query-centered moments pass through a branch MLP to $\bm r_s(\bm q)\in\R^{160}$. The head is
+\begin{equation}
+\bm z_{\rm seg}(\bm q)=h_{\rm seg}([\bm r_m;\bm r_f;\bm r_b;\phi(\bm q);\bm e_{\rm cat}]).\label{eq:seg}
+\end{equation}
+Here $\phi(\bm q)\in\R^{32}$ encodes the query coordinate and $\bm e_{\rm cat}$ is the ShapeNetPart category. The direct route $\bm q\mapsto\phi(\bm q)\mapsto h_{\rm seg}$ preserves the query location while the FWP branches provide compressed multiscale context. This resembles a U-Net skip connection in purpose, although it carries a coordinate embedding rather than a matched-resolution feature map; we therefore call it a \emph{coordinate skip}. The three state reads and the coordinate skip are concatenated once. Query points do not interact, and the decoder never takes a maximum over them. After writing, observed features can be deleted and only coordinates that will be queried need to remain. The same state can also be evaluated at a coordinate absent from the observed set, although we do not measure off-surface interpolation accuracy here.
+
+\subsection{Classification readout}
+For classification, each state row is converted to coordinate-free statistics and mapped to a token. Two learned soft weightings summarize the 128 rows of each branch, producing $\bm h_f,\bm h_m,\bm h_b\in\R^{256}$. The head processes these fixed rows rather than the input points:
+\begin{align}
+\bm\delta&=\sigma(a)\tanh(W[\bm h_f;\bm h_b]+\bm b),\\
+\bm z_{\rm cls}&=h_{\rm cls}(\operatorname{LN}(\bm h_m+\bm\delta)).\label{eq:cls}
+\end{align}
+The middle summary is the reference representation. A zero-initialized, bounded residual from the fine and broad summaries refines it without changing the initial function. The input points are deleted before this head runs. Only the middle radius uses a $25\times$ learning-rate multiplier.
+
+\subsection{Formal properties}
+\begin{proposition}[Permutation invariance and additivity]
+For each branch, \cref{eq:state} is invariant to point order and
+$\Sstate_s(\biguplus_tX_t)=\sum_t\Sstate_s(X_t)$.
+\end{proposition}
+\begin{proof}
+Each point contributes one matrix. A finite sum is invariant to reordering and regrouping in real arithmetic; float differences arise only from accumulation order.
+\end{proof}
+
+\begin{corollary}
+Chunks merge by addition. If subset state $\Sstate_s(Y)$ is available,
+$\Sstate_s(X\setminus Y)=\Sstate_s(X)-\Sstate_s(Y)$. Exponential forgetting uses
+$\Sstate_{s,t}=\rho\Sstate_{s,t-1}+\Sstate_s(X_t)$, $0\le\rho\le1$.
+\end{corollary}
+
+\begin{proposition}[Fixed memory and update]
+Retained memory is $O(\sum_sR_sD_s)$, independent of observed-point count. Encoding $M$ new points costs $O(M\sum_sR_sD_s)$ for the outer products and is independent of history length.
+\end{proposition}
+\begin{proof}
+Only fixed matrices persist; a new chunk produces the same matrix products regardless of earlier chunks.
+\end{proof}
+
+\begin{proposition}[Continuous evidence and queries]
+For evidence strength $t\in[0,1]$, let
+\begin{equation}
+\Sstate_s(t)=\Sstate_s^{\rm old}+t\,\bm k_s(\bm x)\bm v_s(\bm x)^\top.\label{eq:path}
+\end{equation}
+Classification logits and fixed-query segmentation logits are continuous, piecewise-smooth in $t$. Fixed-state segmentation logits are continuous, piecewise-smooth in $\bm q$.
+\end{proposition}
+\begin{proof}
+The state is affine in $t$. RBFs, softmax, affine maps, positive-floor normalization, ReLU/GELU, and stabilized square roots are continuous; their composition is continuous and piecewise differentiable.
+\end{proof}
+The state changes linearly with evidence strength. Logits and probabilities usually change nonlinearly but continuously, while a hard argmax label can switch at a decision boundary. This continuity follows from the model equations; calibration and temporal stability remain empirical questions.
+
+\subsection{Future frame-level delta rule}
+Let $\bm K_{s,t},\bm V_{s,t}$ package all points of frame $t$. A future adaptive transition is
+\begin{equation}
+\Sstate_{s,t}=\rho\Sstate_{s,t-1}+\eta_t\bm K_{s,t}^{\top}
+(\bm V_{s,t}-\bm K_{s,t}\Sstate_{s,t-1}).\label{eq:delta}
+\end{equation}
+This follows fast-weight delta rules~\cite{schlag2021linear}. Under within-frame permutation $P$, $\bm K'=P\bm K$, $\bm V'=P\bm V$, and the correction is unchanged because $P^\top P=I$. Thus points remain unordered within a frame while frame order enters the recurrence. This intentionally loses exact cross-frame additivity and is not used in our results.
+
+\section{Experiments}
+\subsection{Protocol}
+We center each object and divide XYZ by its maximum absolute coordinate, using 1,024 points. ShapeNetPart has 13,972 training and 2,874 test shapes; ModelNet40 has 9,840 and 2,468. Models train 20 epochs with AdamW, base learning rate $3\times10^{-3}$, weight decay $10^{-4}$, cosine decay, and task batch sizes 16 and 32. Classification uses 0.1 label smoothing. Values are mean $\pm$ population standard deviation for seeds 0,1,2. Density shift samples without replacement proportional to $\exp(2.5\bm x^\top\bm d)$ for a fixed-seed random unit direction. The compact PointNet++ models and wider PointNet are controlled local baselines; the latter (442,838 parameters) is not exactly parameter-matched to PointProgrammerNet (529,426).
+
+\subsection{Accuracy}
+\input{../tables/table01_segmentation_accuracy.tex}
+PointProgrammerNet is 0.51 points lower in point accuracy, 1.49 lower in instance mIoU, and 0.82 lower in category mIoU than lightweight PointNet++, while using 36.1\% fewer parameters and no historical-point maximum.
+
+\input{../tables/table02_classification_accuracy.tex}
+The state-only classifier reaches $86.59\%$ clean accuracy, 3.25 points below lightweight PointNet++ and 1.31 points below wider PointNet. Under the density shift, its accuracy drops by 4.12 points. Thus classification can be performed from mergeable states without retaining points, at a measurable accuracy cost.
+
+\subsection{Additivity and fixed state}
+\begin{figure*}[t]\centering
+\includegraphics[width=.98\linewidth]{fig01_additivity_fixed_state.pdf}
+\input{../figures/fig01_additivity_fixed_state_caption.tex}
+\end{figure*}
+Across 32 objects, states built from 2--32 ordered or shuffled chunks match one-shot construction with maximum relative error below $4.9\times10^{-7}$. The three states contain 65,280 float32 scalars (255 KiB). Fixed memory is not always smaller memory: raw XYZ reaches 255 KiB at 21,760 points, and a 1,024-point XYZ cloud is much smaller. The advantage is that retained memory remains bounded as the stream grows and stores learned geometric statistics rather than raw coordinates alone.
+
+\subsection{State operations}
+\begin{figure*}[t]\centering
+\includegraphics[width=.98\linewidth]{fig02_state_operations.pdf}
+\input{../figures/fig02_state_operations_caption.tex}
+\end{figure*}
+Append/merge, removal, and decay match direct constructions with mean relative errors $2.36\times10^{-7}$, $3.23\times10^{-7}$, and $1.92\times10^{-7}$; all maxima remain below $8.9\times10^{-7}$. After 16 frames, the ordinary additive state has norm 14.57, whereas decay with $\rho=.9$ limits the norm to 7.45. This test checks the state algebra; it does not measure accuracy on a temporal task.
+
+\subsection{Streaming efficiency}
+\begin{figure*}[t]\centering
+\includegraphics[width=.98\linewidth]{fig04_streaming_efficiency.pdf}
+\input{../figures/fig04_streaming_efficiency_caption.tex}
+\end{figure*}
+On an RTX 3070 Ti Laptop GPU we time device-resident state construction for four streams, 256 new points per frame, 30 repetitions, and seven trials. Incremental latency remains near 1.5--1.6 ms. Rebuilding is slightly faster through 1,024 points due to fixed overhead. Speedup is $1.54\times$ at 2,048, $3.04\times$ at 4,096, and $5.54\times$ at 8,192 points; state error stays below $7.8\times10^{-7}$.
+
+\subsection{Controlled architecture audit}
+\begin{figure*}[t]\centering
+\includegraphics[width=.98\linewidth]{fig03_controlled_ablation.pdf}
+\input{../figures/fig03_controlled_ablation_caption.tex}
+\end{figure*}
+Five-epoch three-seed screens isolate design choices. Separated radii improve segmentation instance mIoU by $0.51\pm0.18$ points. Unified partition keys improve category mIoU by $0.82\pm0.36$ over mixed keys. Middle-reference residual classification improves clean and shifted accuracy by $2.67\pm1.60$ and $3.78\pm1.71$ over concatenation. The $25\times$ middle-radius rate has variable clean change ($0.13\pm1.03$) but consistent shifted gain ($0.91\pm0.33$), so we treat it as a robustness-oriented optimization choice.
+
+\section{Discussion and Limitations}
+The intended setting is a growing point stream. A device can encode a frame, merge its state, and release the frame; separate workers can encode chunks independently; a segmentation system can retain only the coordinates it plans to query; and a classifier can update its evidence without replaying earlier points. None of these operations compares a new point with all previously decoded points.
+
+The fixed state is also an information bottleneck. PointNet++ forms neighborhoods centered on observed points, and PointNet preserves channelwise extremes; PointProgrammerNet keeps only a finite set of learned moment tables. This explains part of the offline accuracy gap, especially for classification. The state also uses more memory than bare XYZ for small clouds, and segmentation still performs one state read for each requested coordinate.
+
+Normals, color, or intensity can enter values while XYZ keys space. Normals might also define a product key, subject to orientation and bandwidth. Current evaluation covers one dataset per task, XYZ input, one timing GPU, and local controlled baselines. We have not measured unseen-query accuracy, temporal calibration, per-point class stability, or delta adaptation. Continuous logits do not imply monotonic improvement or a continuous hard label.
+
+\section{Conclusion}
+PointProgrammerNet summarizes a point cloud with fixed additive matrices. Continuous keys and second-order values support unordered writes, chunk merging, removal, decay, and updates whose cost does not depend on history length. Coordinate-conditioned segmentation and state-only classification operate without pooling over decoded points. Accuracy remains below the hierarchical baselines, but the model provides a compact and testable design for point-cloud inference from a bounded streaming state.
+
+\section*{CRediT authorship contribution statement}
+Dian Yu: Conceptualization, Methodology, Software, Validation, Formal analysis,
+Investigation, Data curation, Visualization, Writing--original draft, and
+Writing--review and editing.
+
+\section*{Data availability}
+The code needed to reproduce the reported models is provided as supplementary
+material. ShapeNetPart and ModelNet40 are public datasets available from the
+original sources cited in this article.
+
+
+\bibliographystyle{elsarticle-harv}\bibliography{references}
+\end{document}

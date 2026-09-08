@@ -1,0 +1,135 @@
+{
+  "experiment": "Frozen PointProgrammerNet architecture audit",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "note": "Five-epoch screening protocol; paired changes in percentage points.",
+  "comparisons": [
+    {
+      "task": "Segmentation",
+      "label": "Multiscale radii",
+      "control_model": "fwp_dual_read_symmetric_state_seg",
+      "treatment_model": "fwp_dual_read_partition_multiscale_seg",
+      "source": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts_seg\\dual_read_concat_probe\\segmentation_results.json",
+      "metrics": [
+        {
+          "key": "instance_miou",
+          "label": "Instance mIoU",
+          "paired_change": [
+            0.27741617667864205,
+            0.7119914342502653,
+            0.529566869795957
+          ],
+          "mean_change": 0.5063248269082882,
+          "sd_change": 0.1781741807736741
+        },
+        {
+          "key": "category_miou",
+          "label": "Category mIoU",
+          "paired_change": [
+            0.11175496259834006,
+            -0.00125246557945502,
+            0.4639140560945805
+          ],
+          "mean_change": 0.19147218437115518,
+          "sd_change": 0.1980927388993387
+        }
+      ]
+    },
+    {
+      "task": "Segmentation",
+      "label": "Unified partition key",
+      "control_model": "fwp_dual_read_equal_state_width_uniform_lr_seg",
+      "treatment_model": "fwp_dual_read_partition_multiscale_seg",
+      "source": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts_seg\\dual_read_concat_probe\\segmentation_results.json",
+      "metrics": [
+        {
+          "key": "instance_miou",
+          "label": "Instance mIoU",
+          "paired_change": [
+            -0.03445702807607631,
+            0.1716306182524221,
+            0.15137243503927778
+          ],
+          "mean_change": 0.09618200840520785,
+          "sd_change": 0.09274523127486772
+        },
+        {
+          "key": "category_miou",
+          "label": "Category mIoU",
+          "paired_change": [
+            0.34415278302731167,
+            0.8949470172424867,
+            1.216464492685887
+          ],
+          "mean_change": 0.8185214309852284,
+          "sd_change": 0.36019678175310493
+        }
+      ]
+    },
+    {
+      "task": "Classification",
+      "label": "Residual state readout",
+      "control_model": "pointprogrammer_state_multiscale_concat",
+      "treatment_model": "pointprogrammer_state_multiscale_residual",
+      "source": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts\\pointprogrammer_multiscale_concat_probe\\results.json",
+      "metrics": [
+        {
+          "key": "clean_accuracy",
+          "label": "Clean accuracy",
+          "paired_change": [
+            1.171875,
+            1.953125,
+            4.8828125
+          ],
+          "mean_change": 2.6692708333333335,
+          "sd_change": 1.597375539893919
+        },
+        {
+          "key": "density_accuracy",
+          "label": "Density accuracy",
+          "paired_change": [
+            3.3203125,
+            1.953125,
+            6.0546875
+          ],
+          "mean_change": 3.7760416666666665,
+          "sd_change": 1.705182402826666
+        }
+      ]
+    },
+    {
+      "task": "Classification",
+      "label": "Middle radius LR 25x",
+      "control_model": "pointprogrammer_state_multiscale_residual",
+      "treatment_model": "pointprogrammer_state_multiscale_residual_main_r25",
+      "source": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts\\pointprogrammer_main_radius_rate_probe\\results.json",
+      "metrics": [
+        {
+          "key": "clean_accuracy",
+          "label": "Clean accuracy",
+          "paired_change": [
+            1.5625,
+            -0.78125,
+            -0.390625
+          ],
+          "mean_change": 0.13020833333333334,
+          "sd_change": 1.0252614419286212
+        },
+        {
+          "key": "density_accuracy",
+          "label": "Density accuracy",
+          "paired_change": [
+            0.5859375,
+            0.78125,
+            1.3671875
+          ],
+          "mean_change": 0.9114583333333334,
+          "sd_change": 0.33196741624953024
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+% Historical max-based result. Do not include this file in the final paper.
+\begin{table}[t]
+\centering
+\caption{Part-segmentation accuracy on ShapeNetPart with 1,024 input points. Values are mean $\pm$ population standard deviation over three seeds.}
+\label{tab:main_accuracy}
+\begin{tabular}{lrrrr}
+\toprule
+Model & Point acc. (\%) & Ins. mIoU (\%) & Cat. mIoU (\%) & Params \\
+\midrule
+PointNet++ (XYZ) & 93.41 $\pm$ 0.05 & 83.88 $\pm$ 0.11 & 79.51 $\pm$ 0.24 & 573,106 \\
+PointProgrammerNet (XYZ) & 93.12 $\pm$ 0.04 & 83.36 $\pm$ 0.08 & 78.73 $\pm$ 0.25 & 497,522 \\
+PointNet++ (XYZ+normal) & 93.97 $\pm$ 0.04 & 84.68 $\pm$ 0.11 & 81.12 $\pm$ 0.19 & 573,682 \\
+PointProgrammerNet (XYZ+normal) & 93.52 $\pm$ 0.02 & 84.10 $\pm$ 0.04 & 80.03 $\pm$ 0.11 & 497,810 \\
+\bottomrule
+\end{tabular}
+\end{table}

@@ -1,0 +1,223 @@
+{
+  "segmentation_protocol": {
+    "epochs": 20,
+    "num_points": 1024,
+    "train_shapes": 13972,
+    "test_shapes": 2874,
+    "learning_rate": 0.003,
+    "batch_size": 16,
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "classification_protocol": {
+    "epochs": 20,
+    "num_points": 1024,
+    "train_shapes": 9840,
+    "test_shapes": 2468,
+    "learning_rate": 0.003,
+    "batch_size": 32,
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "strict_no_max_models": [
+    "fwp_dual_read_partition_multiscale_seg",
+    "pointprogrammer_state_multiscale_residual_main_r25"
+  ],
+  "complete": true,
+  "missing": [],
+  "segmentation": [
+    {
+      "model": "pn2_seg",
+      "label": "Lightweight PointNet++",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "point_accuracy": {
+        "values": [
+          93.39349012700069,
+          93.35628289187544,
+          93.46623961595337
+        ],
+        "mean": 93.40533754494317,
+        "population_sd": 0.045664656474604194
+      },
+      "instance_miou": {
+        "values": [
+          83.76172031231721,
+          83.85230283065876,
+          84.03072821733727
+        ],
+        "mean": 83.88158378677107,
+        "population_sd": 0.11175671205483001
+      },
+      "category_miou": {
+        "values": [
+          79.27885621183954,
+          79.83382045055339,
+          79.4046315225573
+        ],
+        "mean": 79.5057693949834,
+        "population_sd": 0.2375822362775626
+      },
+      "parameters": 573106
+    },
+    {
+      "model": "fwp_dual_read_partition_multiscale_seg",
+      "label": "PointProgrammerNet",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "point_accuracy": {
+        "values": [
+          92.89613642788797,
+          92.90646610777662,
+          92.89460736343077
+        ],
+        "mean": 92.89906996636512,
+        "population_sd": 0.0052669846125210605
+      },
+      "instance_miou": {
+        "values": [
+          82.56271804130203,
+          82.32009914877605,
+          82.29361579058676
+        ],
+        "mean": 82.39214432688829,
+        "population_sd": 0.12109744313822697
+      },
+      "category_miou": {
+        "values": [
+          78.76381146748903,
+          78.60123780930847,
+          78.68490768861224
+        ],
+        "mean": 78.68331898846992,
+        "population_sd": 0.06637992447348957
+      },
+      "parameters": 366389
+    }
+  ],
+  "classification": [
+    {
+      "model": "pn2_max",
+      "label": "Lightweight PointNet++",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "clean_accuracy": {
+        "values": [
+          89.99189627228525,
+          90.27552674230145,
+          89.26256077795786
+        ],
+        "mean": 89.84332793084819,
+        "population_sd": 0.4266766342228858
+      },
+      "density_accuracy": {
+        "values": [
+          86.26418152350081,
+          84.23824959481361,
+          85.89951377633712
+        ],
+        "mean": 85.46731496488384,
+        "population_sd": 0.8817395323581579
+      },
+      "density_drop": {
+        "values": [
+          3.727714748784436,
+          6.037277147487842,
+          3.3630470016207425
+        ],
+        "mean": 4.37601296596434,
+        "population_sd": 1.1840874551217557
+      },
+      "parameters": 207784
+    },
+    {
+      "model": "pointnet_max_matched",
+      "label": "Parameter-matched PointNet",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "clean_accuracy": {
+        "values": [
+          87.60129659643437,
+          88.24959481361427,
+          87.84440842787683
+        ],
+        "mean": 87.89843327930849,
+        "population_sd": 0.26740937159944933
+      },
+      "density_accuracy": {
+        "values": [
+          87.11507293354943,
+          88.04700162074555,
+          87.47974068071312
+        ],
+        "mean": 87.5472717450027,
+        "population_sd": 0.38344326219823194
+      },
+      "density_drop": {
+        "values": [
+          0.4862236628849388,
+          0.20259319286871857,
+          0.36466774716370765
+        ],
+        "mean": 0.35116153430578834,
+        "population_sd": 0.11618483612970058
+      },
+      "parameters": 442838
+    },
+    {
+      "model": "pointprogrammer_state_multiscale_residual_main_r25",
+      "label": "PointProgrammerNet",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "clean_accuracy": {
+        "values": [
+          86.70988654781199,
+          86.79092382495948,
+          86.26418152350081
+        ],
+        "mean": 86.58833063209076,
+        "population_sd": 0.2315833090151561
+      },
+      "density_accuracy": {
+        "values": [
+          82.57698541329012,
+          83.54943273905997,
+          81.2803889789303
+        ],
+        "mean": 82.46893571042679,
+        "population_sd": 0.9294786890375623
+      },
+      "density_drop": {
+        "values": [
+          4.132901134521873,
+          3.2414910858995114,
+          4.983792544570505
+        ],
+        "mean": 4.119394921663964,
+        "population_sd": 0.7113557040661119
+      },
+      "parameters": 529426
+    }
+  ]
+}

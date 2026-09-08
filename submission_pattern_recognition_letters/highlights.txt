@@ -1,0 +1,4 @@
+Fixed-size additive states summarize unordered point streams without replay.
+Independent chunks can be merged, removed, or exponentially decayed.
+Segmentation queries coordinates; classification retains no input points.
+Incremental updates are 5.54 times faster at 8,192 accumulated points.

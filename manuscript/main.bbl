@@ -1,0 +1,92 @@
+\begin{thebibliography}{9}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\href}[2]{#2}
+\providecommand{\path}[1]{#1}
+\providecommand{\DOIprefix}{doi:}
+\providecommand{\ArXivprefix}{arXiv:}
+\providecommand{\URLprefix}{URL: }
+\providecommand{\Pubmedprefix}{pmid:}
+\providecommand{\doi}[1]{\href{http://dx.doi.org/#1}{\path{#1}}}
+\providecommand{\Pubmed}[1]{\href{pmid:#1}{\path{#1}}}
+\providecommand{\bibinfo}[2]{#2}
+\ifx\xfnm\relax \def\xfnm[#1]{\unskip,\space#1}\fi
+%Type = Article
+\bibitem[{Chang et~al.(2015)Chang, Funkhouser, Guibas, Hanrahan, Huang, Li,
+  Savarese, Savva, Song, Su, Xiao, Yi and Yu}]{chang2015shapenet}
+\bibinfo{author}{Chang, A.X.}, \bibinfo{author}{Funkhouser, T.},
+  \bibinfo{author}{Guibas, L.}, \bibinfo{author}{Hanrahan, P.},
+  \bibinfo{author}{Huang, Q.}, \bibinfo{author}{Li, Z.},
+  \bibinfo{author}{Savarese, S.}, \bibinfo{author}{Savva, M.},
+  \bibinfo{author}{Song, S.}, \bibinfo{author}{Su, H.}, \bibinfo{author}{Xiao,
+  J.}, \bibinfo{author}{Yi, L.}, \bibinfo{author}{Yu, F.},
+  \bibinfo{year}{2015}.
+\newblock \bibinfo{title}{Shapenet: An information-rich 3d model repository}.
+\newblock \bibinfo{journal}{arXiv:1512.03012} .
+%Type = Inproceedings
+\bibitem[{Katharopoulos et~al.(2020)Katharopoulos, Vyas, Pappas and
+  Fleuret}]{katharopoulos2020transformers}
+\bibinfo{author}{Katharopoulos, A.}, \bibinfo{author}{Vyas, A.},
+  \bibinfo{author}{Pappas, N.}, \bibinfo{author}{Fleuret, F.},
+  \bibinfo{year}{2020}.
+\newblock \bibinfo{title}{Transformers are {RNN}s: Fast autoregressive
+  transformers with linear attention}, in: \bibinfo{booktitle}{ICML}, pp.
+  \bibinfo{pages}{5156--5165}.
+%Type = Inproceedings
+\bibitem[{Lee et~al.(2019)Lee, Lee, Kim, Kosiorek, Choi and
+  Teh}]{lee2019settransformer}
+\bibinfo{author}{Lee, J.}, \bibinfo{author}{Lee, Y.}, \bibinfo{author}{Kim,
+  J.}, \bibinfo{author}{Kosiorek, A.}, \bibinfo{author}{Choi, S.},
+  \bibinfo{author}{Teh, Y.W.}, \bibinfo{year}{2019}.
+\newblock \bibinfo{title}{Set transformer: A framework for attention-based
+  permutation-invariant neural networks}, in: \bibinfo{booktitle}{ICML}, pp.
+  \bibinfo{pages}{3744--3753}.
+%Type = Inproceedings
+\bibitem[{Qi et~al.(2017a)Qi, Su, Mo and Guibas}]{qi2017pointnet}
+\bibinfo{author}{Qi, C.R.}, \bibinfo{author}{Su, H.}, \bibinfo{author}{Mo, K.},
+  \bibinfo{author}{Guibas, L.J.}, \bibinfo{year}{2017}a.
+\newblock \bibinfo{title}{Pointnet: Deep learning on point sets for 3d
+  classification and segmentation}, in: \bibinfo{booktitle}{CVPR}, pp.
+  \bibinfo{pages}{652--660}.
+%Type = Inproceedings
+\bibitem[{Qi et~al.(2017b)Qi, Yi, Su and Guibas}]{qi2017pointnetplusplus}
+\bibinfo{author}{Qi, C.R.}, \bibinfo{author}{Yi, L.}, \bibinfo{author}{Su, H.},
+  \bibinfo{author}{Guibas, L.J.}, \bibinfo{year}{2017}b.
+\newblock \bibinfo{title}{Pointnet++: Deep hierarchical feature learning on
+  point sets in a metric space}, in: \bibinfo{booktitle}{NeurIPS}.
+%Type = Inproceedings
+\bibitem[{Schlag et~al.(2021)Schlag, Irie and Schmidhuber}]{schlag2021linear}
+\bibinfo{author}{Schlag, I.}, \bibinfo{author}{Irie, K.},
+  \bibinfo{author}{Schmidhuber, J.}, \bibinfo{year}{2021}.
+\newblock \bibinfo{title}{Linear transformers are secretly fast weight
+  programmers}, in: \bibinfo{booktitle}{ICML}, pp. \bibinfo{pages}{9355--9366}.
+%Type = Inproceedings
+\bibitem[{Wu et~al.(2015)Wu, Song, Khosla, Yu, Zhang, Tang and
+  Xiao}]{wu20153dshapenets}
+\bibinfo{author}{Wu, Z.}, \bibinfo{author}{Song, S.}, \bibinfo{author}{Khosla,
+  A.}, \bibinfo{author}{Yu, F.}, \bibinfo{author}{Zhang, L.},
+  \bibinfo{author}{Tang, X.}, \bibinfo{author}{Xiao, J.}, \bibinfo{year}{2015}.
+\newblock \bibinfo{title}{3d shapenets: A deep representation for volumetric
+  shapes}, in: \bibinfo{booktitle}{CVPR}, pp. \bibinfo{pages}{1912--1920}.
+%Type = Article
+\bibitem[{Yi et~al.(2016)Yi, Kim, Ceylan, Shen, Yan, Su, Lu, Huang, Sheffer and
+  Guibas}]{yi2016scalable}
+\bibinfo{author}{Yi, L.}, \bibinfo{author}{Kim, V.G.}, \bibinfo{author}{Ceylan,
+  D.}, \bibinfo{author}{Shen, I.C.}, \bibinfo{author}{Yan, M.},
+  \bibinfo{author}{Su, H.}, \bibinfo{author}{Lu, C.}, \bibinfo{author}{Huang,
+  Q.}, \bibinfo{author}{Sheffer, A.}, \bibinfo{author}{Guibas, L.},
+  \bibinfo{year}{2016}.
+\newblock \bibinfo{title}{A scalable active framework for region annotation in
+  3d shape collections}.
+\newblock \bibinfo{journal}{ACM Transactions on Graphics} \bibinfo{volume}{35},
+  \bibinfo{pages}{210:1--210:12}.
+%Type = Inproceedings
+\bibitem[{Zaheer et~al.(2017)Zaheer, Kottur, Ravanbakhsh, Poczos, Salakhutdinov
+  and Smola}]{zaheer2017deepsets}
+\bibinfo{author}{Zaheer, M.}, \bibinfo{author}{Kottur, S.},
+  \bibinfo{author}{Ravanbakhsh, S.}, \bibinfo{author}{Poczos, B.},
+  \bibinfo{author}{Salakhutdinov, R.}, \bibinfo{author}{Smola, A.J.},
+  \bibinfo{year}{2017}.
+\newblock \bibinfo{title}{Deep sets}, in: \bibinfo{booktitle}{NeurIPS}.
+
+\end{thebibliography}
