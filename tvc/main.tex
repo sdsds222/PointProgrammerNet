@@ -1,24 +1,18 @@
 % The Visual Computer (Springer) -- single-column manuscript.
-% Converted from the Pattern Recognition Letters two-column version.
-% Content is unchanged except for: (i) the supplementary material folded into
-% the main text, (ii) a new Section 4.2 on parallel versus single states, and
-% (iii) an explicit statement in Section 5.2 that the state, not the readout,
-% is the binding compression bottleneck.
+% Build: pdflatex main && bibtex main && pdflatex main && pdflatex main
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=2.6cm]{geometry}
 \usepackage{amsmath,amssymb,amsthm,bm,booktabs,graphicx,url,makecell}
 \usepackage[hidelinks]{hyperref}
 \usepackage[nameinlink,noabbrev]{cleveref}
-\usepackage{setspace}
 \graphicspath{{../figures/}}
 \setlength{\emergencystretch}{1em}
 \newtheorem{proposition}{Proposition}
-\newtheorem{corollary}{Corollary}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\Sstate}{\mathbf{S}}
 \newcommand{\vect}{\operatorname{vec}}
 
-\title{\bfseries A Fixed-state additive FWP network for streaming point-cloud
+\title{\bfseries A fixed-state additive FWP network for streaming point-cloud
 recognition}
 \author{Dian Yu\thanks{Corresponding author. \texttt{dian.yu2@student.unsw.edu.au},
 ORCID \url{https://orcid.org/0009-0002-0107-1014}}\\[2pt]
@@ -46,29 +40,28 @@ Independent chunks can therefore be merged, a stored subset can be subtracted, a
 Our contributions are:
 \begin{itemize}
 \item a three-scale second-order fast-weight-programmer (FWP) state whose memory does not grow with the number of observed points;
-\item additive point writes that support exact streaming, hierarchical merging, and distributed aggregation without replaying chunk contents;
+\item additive point writes that support exact streaming, hierarchical merging, and distributed aggregation without replaying chunk contents, and that admit a fully parallel write and read;
 \item a coordinate-conditioned segmentation head and a state-only classification head, neither of which pools over decoded points;
 \item proofs and experiments covering additivity, state operations, accuracy, and update cost, including a causal test showing that three parallel states outperform one state at an equal parameter budget.
 \end{itemize}
-Our compact PointNet++ implementations are controlled baselines rather than claims of canonical reproduction. We use them to measure the accuracy cost of the fixed-state constraint.
 
 \section{Related Work}
 There are several established ways to reduce an unordered point set to a fixed summary. They differ mainly in what they give up at the moment a point is absorbed, and that choice decides which state operations remain available afterwards. We group the related work by that choice, then state which properties this architecture keeps.
 
 \subsection{Symmetric pooling and metric neighborhoods}
-PointNet applies pointwise transforms followed by maximum pooling~\cite{qi2017pointnet}, PointNet++ adds hierarchical metric neighborhoods~\cite{qi2017pointnetplusplus}, and Deep Sets characterizes permutation-invariant functions built from sums~\cite{zaheer2017deepsets}. All three are invariant to point order, and the sum used by Deep Sets is additive in the strict sense of Equation~\eqref{eq:add-main}. Two properties still limit a growing stream. A channelwise maximum discards the information needed to undo it, so a stored summary cannot be corrected when an observation is later removed. A metric neighborhood is defined relative to the points currently held, so inserting or deleting one point changes which points belong to other neighborhoods and the grouping must be rebuilt. Deep Sets avoids both, but it sums into a single global vector that carries no spatial address and therefore cannot be evaluated at a requested coordinate. PointProgrammerNet keeps the additive sum and spreads it over 128 spatially addressed rows, which is what allows a coordinate-conditioned read without giving up additivity.
+PointNet applies pointwise transforms followed by maximum pooling~\cite{qi2017pointnet}, PointNet++ adds hierarchical metric neighborhoods~\cite{qi2017pointnetplusplus}, and Deep Sets characterizes permutation-invariant functions built from sums~\cite{zaheer2017deepsets}. All three are invariant to point order, and the sum used by Deep Sets is additive in the strict sense of Equation~\eqref{eq:add-main}. A growing stream nevertheless runs into two obstacles. A channelwise maximum discards the information needed to undo it, so a stored summary cannot be corrected once an observation is removed. A metric neighborhood is defined relative to the points currently held; insert or delete one point and the membership of other neighborhoods shifts with it, forcing the grouping to be rebuilt. Deep Sets escapes both, at the price of summing into a single global vector that carries no spatial address and cannot be evaluated at a requested coordinate. We keep the additive sum but spread it over 128 spatially addressed rows, so a coordinate-conditioned read remains possible without giving up additivity.
 
 \subsection{Fixed-size summaries over learned centers}
-VLAD compresses local descriptors by assigning them to learned centers and accumulating residuals~\cite{jegou2010vlad}. NetVLAD makes that assignment soft and differentiable~\cite{arandjelovic2016netvlad}, and PointNetVLAD applies the construction to point clouds for place recognition~\cite{uy2018pointnetvlad}. The accumulator has the same shape as ours: a fixed matrix built by soft assignment to learned centers. Three differences matter. First, the accumulated residuals are first order, whereas Equation~\eqref{eq:value-main} retains every moment up to second order. Second, the assignment is made in feature space, whereas our address is a normalized function of the coordinate and therefore remains continuous in a query position. Third, and most relevant here, NetVLAD intra-normalizes each block and then $L_2$-normalizes the flattened descriptor. Those steps are not additive: normalizing two partial descriptors and adding them does not reproduce the descriptor of their union. The raw accumulator is additive, but the published construction normalizes that property away and never uses it. We deliberately leave the accumulator unnormalized and move normalization to read time, which is exactly what preserves \Cref{prop:order}.
+VLAD compresses local descriptors by assigning them to learned centers and accumulating residuals~\cite{jegou2010vlad}. NetVLAD makes that assignment soft and differentiable~\cite{arandjelovic2016netvlad}, and PointNetVLAD applies the construction to point clouds for place recognition~\cite{uy2018pointnetvlad}. The accumulator has the same shape as ours: a fixed matrix built by soft assignment to learned centers. It differs in what is accumulated and in what happens afterwards. The residuals are first order, whereas Equation~\eqref{eq:value-main} retains every moment up to second order, and the assignment is made in feature space, whereas our address is a normalized function of the coordinate and stays continuous in a query position. The decisive difference is the last step. NetVLAD intra-normalizes each block and then $L_2$-normalizes the flattened descriptor, and neither operation is additive: normalizing two partial descriptors and adding them does not reproduce the descriptor of their union. The raw accumulator is additive, but the published construction normalizes that property away and never uses it. We leave the accumulator unnormalized and move normalization to read time, preserving \Cref{prop:order}.
 
 \subsection{Attention over a fixed latent set}
 Set Transformer summarizes a set using inducing points and attention~\cite{lee2019settransformer}. Perceiver IO maintains a latent array whose size is independent of the input and decodes arbitrary outputs, including dense per-element predictions, by attending to that latent with an output query array~\cite{jaegle2022perceiverio}. Reading a fixed latent with a query in order to produce dense output is their contribution, not ours. The difference lies on the encoding side. Softmax cross-attention normalizes over the observed elements, so the latent obtained from two disjoint chunks is not the sum of the two latents; the representation cannot be merged, subtracted, or decayed arithmetically, and no such property is claimed. Our write applies no normalizer over the observed set, so the state remains a sum of independent per-point terms. The meaning of a query also differs: Perceiver queries are learned position embeddings, whereas ours is a coordinate in the same space as the data, so one state can be evaluated at positions that were never observed.
 
 \subsection{Bounded recurrent state}
-Kernelized attention can be evaluated recurrently with a fixed-size state~\cite{katharopoulos2020transformers}, and fast-weight programmers express such updates as additive outer products or delta corrections~\cite{schlag2021linear}. These are the mechanisms our write uses. Recent point-cloud work also adopts a bounded state through structured state space models; PointMamba serializes points with space-filling curves before the recurrence~\cite{liang2024pointmamba}. Serialization makes the hidden state a function of the traversal order, so it is not permutation invariant and two partial states cannot be added. We retain the bounded state but not the sequence, because the order-free sum is what buys chunk and device equivalence.
+Kernelized attention can be evaluated recurrently with a fixed-size state~\cite{katharopoulos2020transformers}, and fast-weight programmers express such updates as additive outer products or delta corrections~\cite{schlag2021linear}. These are the mechanisms our write uses. Recent point-cloud work also adopts a bounded state through structured state space models; PointMamba serializes points with space-filling curves before the recurrence~\cite{liang2024pointmamba}. Serialization makes the hidden state a function of the traversal order, so it is not permutation invariant and two partial states cannot be added. We keep the bounded state but not the sequence: chunk and device equivalence rests on the sum being order free.
 
 \subsection{What this architecture refuses to do}
-Each family above surrenders one property to gain another. A maximum surrenders invertibility. A metric neighborhood surrenders locality of edits. A normalized descriptor surrenders additivity. A softmax encoder surrenders decomposability. A serialized recurrence surrenders order invariance. The design studied here follows from a single refusal at write time: nothing that couples one point's write to another point may enter the persistent state. That excludes normalization over the observed set, comparison between points, selection, and ordering. Operations that aggregation methods usually perform while absorbing a point --- density normalization, centring on a reference position, and nonlinear interpretation --- are instead deferred to the read, where they no longer touch the algebra of the stored matrices. \Cref{tab:family-comparison} states the resulting position.
+Every family above trades one property for another: a maximum gives up invertibility, a metric neighborhood gives up locality of edits, a normalized descriptor gives up additivity, a softmax encoder gives up decomposability, and a serialized recurrence gives up order invariance. The design studied here follows from a single refusal at write time: nothing that couples one point's write to another point may enter the persistent state. That excludes normalization over the observed set, comparison between points, selection, and ordering. Operations that aggregation methods usually perform while absorbing a point --- density normalization, centring on a reference position, and nonlinear interpretation --- are instead deferred to the read, where they no longer touch the algebra of the stored matrices. \Cref{tab:family-comparison} states the resulting position.
 
 \begin{table}[t]
 \centering
@@ -83,18 +76,19 @@ PointNet, maximum pooling & yes & no & yes & no \\
 PointNet++, metric neighborhoods & yes & no & no & no \\
 Deep Sets, global sum & yes & yes & yes & no \\
 VLAD, NetVLAD, PointNetVLAD & yes & no$^{a}$ & yes & no \\
-Set Transformer, Perceiver IO & yes & no$^{b}$ & yes & yes$^{c}$ \\
-Linear attention, fast weights & sequence & yes & yes & no \\
+Set Transformer, inducing points & yes & no$^{b}$ & yes & no \\
+Perceiver IO, output queries & yes & no$^{b}$ & yes & yes$^{c}$ \\
+Linear attention, fast weights & yes$^{d}$ & yes & yes & no \\
 State space models on serialized points & no & no & yes & no \\
 \midrule
 PointProgrammerNet (this work) & yes & yes & yes & yes \\
 \bottomrule
 \end{tabular}
 \\[3pt]
-\parbox{\linewidth}{\footnotesize $^{a}$The raw accumulator is additive, but intra-normalization and $L_2$ normalization remove the property. $^{b}$Softmax over the observed elements couples them. $^{c}$Perceiver IO decodes dense outputs from learned position queries rather than from a coordinate in the input space.}
+\parbox{\linewidth}{\footnotesize $^{a}$The raw accumulator is additive, but intra-normalization and $L_2$ normalization remove the property. $^{b}$Softmax over the observed elements couples them. $^{c}$Perceiver IO decodes dense outputs from learned position queries, not from a coordinate in the input space. $^{d}$The outer-product update is itself order free, although these models are applied to ordered sequences.}
 \end{table}
 
-The cost of that refusal is measured rather than asserted. \Cref{tab:segmentation_accuracy,tab:classification_accuracy} report the accuracy gap to hierarchical baselines, and \Cref{sec:parallel} shows that the parallel-state structure, and not the parameter budget, is what recovers part of it.
+What that refusal provides and what it costs are both measured rather than asserted. \Cref{sec:parallel} isolates the contribution of the parallel-state structure, and \Cref{tab:segmentation_accuracy,tab:classification_accuracy} place the resulting accuracy against hierarchical baselines.
 
 We evaluate classification on ModelNet40~\cite{wu20153dshapenets} and part segmentation on ShapeNetPart~\cite{yi2016scalable}, which is derived from ShapeNet~\cite{chang2015shapenet}.
 
@@ -291,6 +285,14 @@ The additive rule treats all frames as exchangeable evidence. When frame order i
 \end{equation}
 Here $\bm K_{s,t}$ and $\bm V_{s,t}$ package all keys and values in frame $t$, $\rho$ retains old state, and $\eta_t$ is an update rate. Reordering points within a frame multiplies both matrices on the left by the same permutation $P$; the correction is unchanged because $P^\top P=I$. The extension therefore preserves within-frame point-order invariance while introducing ordered state transitions between frames. It is a proposed direction and is not used in the reported experiments because it intentionally gives up exact additivity across frames.
 
+\subsection{Parallel evaluation}
+\label{sec:parallel-eval}
+The refusal stated in Section~2.5 also fixes how the computation can be laid out. Within a chunk, the write of one point reads no other point, so all $M$ points are evaluated at once and the chunk update is the single matrix product of Equation~\eqref{eq:state-main}. Between chunks and between devices, \Cref{prop:order} makes the combination a sum, and sums are associative and commutative: partial states can be produced concurrently and reduced in any order, including a tree of depth $\log D$ over $D$ producers, with no synchronization and no fixed schedule. The three branches share no term during the write, so their addresses and values form three independent matrix products that can be issued concurrently or batched. Reading behaves the same way, since the segmentation head acts on each query separately and never pools over decoded queries; a set of requested coordinates is again one matrix product followed by pointwise networks, and the queries can be divided across devices without any exchange.
+
+One detail makes the first of these possible. The address in Equation~\eqref{eq:key-main} does normalize, but over the 128 rows of its own branch and not over the observed set, so the denominator stays inside a single point's computation and never becomes a reduction across points. The critical path of encoding a chunk then does not grow with the number of points in it, which is also why the measured incremental latency in \Cref{sec:additivity} stays flat while reconstruction time grows with history.
+
+Several common constructions do not admit this layout. A metric neighborhood requires a data-dependent search over the points currently held; the point set must be resident and the gather is irregular. A recurrence over serialized points is sequential along the sequence dimension and its result depends on the traversal, so partial results cannot be produced independently and then merged. A normalizer taken over the observed set, as in softmax attention, is itself a reduction across points, and so a synchronization point inside the write.
+
 \section{Experiments}
 \subsection{Protocol and accuracy}
 We center each object and divide XYZ by its maximum absolute coordinate, using 1,024 points. ShapeNetPart contains 13,972 training and 2,874 test shapes; ModelNet40 contains 9,840 and 2,468. Models train for 20 epochs with AdamW, base learning rate $3\times10^{-3}$, weight decay $10^{-4}$, cosine decay, and batch sizes 16 and 32. Classification uses 0.1 label smoothing. Results are mean $\pm$ population standard deviation over seeds 0, 1, and 2. The segmentation model contains 341,909 trainable parameters and the state-only classifier contains 529,426. In classification, the middle radius alone uses a $25\times$ learning-rate multiplier without weight decay; the controlled screen in \Cref{sec:screens} motivates this robustness-oriented choice. All reported PointProgrammerNet variants use three $128\times170$ states and no global maximum over input or decoded points. Our compact PointNet++ implementations are controlled local baselines rather than claims of canonical reproduction.
@@ -324,7 +326,7 @@ PointProgrammerNet & $86.59\pm0.23$ & $82.47\pm0.93$ & $4.12\pm0.71$ & 529,426 \
 \bottomrule
 \end{tabular}
 \end{table}
-The state-only classifier reaches $86.59\%$ clean accuracy, 3.25 points below lightweight PointNet++ and 1.31 points below the parameter-matched PointNet. Its density-shift accuracy is $82.47\%$. This quantifies the accuracy cost of discarding the point list and classifying only from mergeable states.
+The state-only classifier reaches $86.59\%$ clean accuracy and $82.47\%$ under the density shift. \Cref{tab:classification_accuracy} places these against both controls and quantifies what it costs to discard the point list and classify only from mergeable states.
 
 \subsection{Parallel states versus a single state}
 \label{sec:parallel}
@@ -348,10 +350,11 @@ Released three-state model & 3 & 341,909 & 77.22 & 73.08 \\
 \end{tabular}
 \end{table}
 
-Removing the two auxiliary states costs $1.05$ to $1.20$ instance mIoU at an unchanged parameter budget. Adding capacity to one state instead does not help: doubling the main state from 128 to 256 rows, while keeping all three states, reaches $74.79$ and stays below every configuration whose states are all 128 rows wide. The released model, which uses three states at 341,909 parameters, reaches $77.22$ under the same screening protocol, exceeding the single-state control by $2.54$ points with 29.5\% fewer parameters. Parallel states therefore contribute usable structure that neither a larger parameter budget nor a wider main state supplies. These are short screens on a data subset and are reported as a controlled comparison rather than as final accuracy.
+Removing the two auxiliary states costs $1.05$ to $1.20$ instance mIoU at an unchanged parameter budget. Adding capacity to one state instead does not help: doubling the main state from 128 to 256 rows, while keeping all three states, reaches $74.79$ and stays below every configuration whose states are all 128 rows wide. The released model, which uses three states at 341,909 parameters, reaches $77.22$ under the same screening protocol, exceeding the single-state control by $2.54$ points with 29.5\% fewer parameters. Parallel states contribute usable structure that neither a larger parameter budget nor a wider main state supplies. These are short screens on a data subset, reported as a controlled comparison and not as final accuracy.
 
 \subsection{Additivity and update cost}
-Across 32 objects, states built from 2--32 ordered or shuffled chunks agree with one-shot construction to relative error below $5.3\times10^{-7}$. Append, merge, removal, and decay tests remain below $9.8\times10^{-7}$. The three float32 states contain 65,280 scalars (255 KiB), independent of stream length. Raw XYZ is smaller for short clouds; the benefit is bounded retained memory and direct state operations over long or distributed streams.
+\label{sec:additivity}
+Across 32 objects, states built from 2--32 ordered or shuffled chunks agree with one-shot construction to relative error below $5.3\times10^{-7}$. Append, merge, removal, and decay tests remain below $9.8\times10^{-7}$. The three float32 states contain 65,280 scalars (255 KiB), independent of stream length. Raw XYZ is smaller for short clouds --- the measured crossover is about 21,800 observations --- and the benefit is bounded retained memory together with direct state operations over long or distributed streams.
 
 \begin{figure}[t]\centering
 \includegraphics[width=0.92\linewidth]{fig01_additivity_fixed_state.pdf}
@@ -408,16 +411,16 @@ Consider several LiDAR nodes observing different parts of a scene. The trained e
 
 For classification, the server passes the merged triple directly to the state-row readout. A new device or frame changes the class evidence by adding one more triple, without decoding and pooling the earlier clouds again. For segmentation, the server supplies a coordinate $\bm q$ to the three matrix reads. Queries may be the coordinates of selected observed points, a region requested by an operator, or positions on a regular grid. Only these coordinates need to be available at read time. Because Equation~\eqref{eq:effective-read-main} depends smoothly on $\bm q$, nearby queries receive smoothly changing state evidence, including at coordinates that were not explicitly observed. The current experiments evaluate labels only at observed ShapeNetPart points, so accuracy at new coordinates remains an open empirical question.
 
-\subsection{Where the representation is limited}
+\subsection{What the fixed state retains and discards}
 \label{sec:bottleneck}
 The fixed states are summaries rather than compressed point archives. They are sufficient to evaluate the learned heads, but they are not designed to reconstruct every original observation. Two point sets can produce similar moment tables, especially when many spatial addresses overlap. The learned centers, radii, content networks, and second-order terms determine which distinctions survive this compression. This explains both the bounded-memory benefit and the remaining accuracy gap to a neighborhood method that retains or rebuilds detailed point relations.
 
-More precisely, once a point has been written the state is the only thing any later stage can see, so no decoder can restore a distinction that the write has already discarded. The state, and not the readout, is therefore the binding compression bottleneck of the architecture. The screens support this directly. Changing the segmentation decoders moves instance mIoU by $0.30\pm0.30$ points, and changing their width or sharing pattern produces similar sub-point changes, whereas changing the state configuration in \Cref{sec:parallel} moves it by more than one point. This is why the design spends its structure on how points are written -- the normalized address, the second-order value, and the use of several parallel states -- rather than on how the state is decoded, and it is the reason a wider main state is a poor substitute for the parallel structure.
+More precisely, once a point has been written the state is the only thing any later stage can see, so no decoder can restore a distinction that the write has already discarded. The state, and not the readout, is the binding compression bottleneck of the architecture. The screens support this directly. Changing the segmentation decoders moves instance mIoU by $0.30\pm0.30$ points, and changing their width or sharing pattern produces similar sub-point changes, whereas changing the state configuration in \Cref{sec:parallel} moves it by more than one point. This is why the design spends its structure on how points are written -- the normalized address, the second-order value, and the use of several parallel states -- rather than on how the state is decoded, and it is the reason a wider main state is a poor substitute for the parallel structure.
 
 PointNet++ forms neighborhoods around observed points and PointNet preserves channelwise extremes, whereas PointProgrammerNet retains finite moment tables. The state also exceeds bare-XYZ storage for short clouds; its benefit appears when bounded communication, merging, or long streams justify the fixed cost. Distributed equivalence requires identical preprocessing and a shared coordinate frame, and segmentation still reads the state once per requested coordinate. Evaluation is limited to XYZ input, one dataset per task, one timing GPU, and local controlled baselines. Unseen-query accuracy, temporal calibration, additional attributes, and delta adaptation remain future work.
 
 \section{Conclusion}
-PointProgrammerNet summarizes a point cloud with fixed additive matrices. Continuous keys and second-order values support unordered writes, exact distributed merging, removal, decay, and updates whose cost does not depend on history length. Several parallel states encode more usable structure than a single state of the same parameter budget, and the state itself is the binding compression bottleneck rather than the readout. Coordinate-conditioned segmentation and state-only classification operate without pooling over decoded points. Accuracy remains below the hierarchical baselines, but the model provides a compact and testable design for centralized or distributed point-cloud inference from a bounded streaming state.
+PointProgrammerNet summarizes a point cloud with fixed additive matrices. Continuous keys and second-order values support unordered writes, exact distributed merging, removal, decay, and updates whose cost does not depend on history length. Several parallel states encode more usable structure than a single state of the same parameter budget, and the state itself is the binding compression bottleneck, not the readout. Coordinate-conditioned segmentation and state-only classification operate without pooling over decoded points. The model provides a compact and testable design for centralized or distributed point-cloud inference from a bounded streaming state, at an accuracy cost relative to hierarchical baselines that the experiments quantify.
 
 \section*{Statements and Declarations}
 \noindent\textbf{Competing interests.} The author declares no competing financial
