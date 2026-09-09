@@ -1,0 +1,144 @@
+\documentclass[UTF8,a4paper,11pt,fontset=windows]{ctexart}
+\usepackage{amsmath,amssymb,amsthm,bm,booktabs,url}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{1em}
+\newtheorem{proposition}{命题}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Sstate}{\mathbf{S}}
+\newcommand{\vect}{\operatorname{vec}}
+\title{《面向流式点云识别的固定状态可加 FWP 网络》补充材料}
+\author{Dian Yu\\University of New South Wales, Sydney, NSW 2052, Australia}
+\date{中文补充材料校对稿}
+\begin{document}
+\maketitle
+
+正文已经说明逐点编码器、空间地址、可加外积状态、两个任务头和主要实验。本补充材料只保留正文没有展开、但精确复现和核查方法性质所必需的细节。
+
+\section{精确读出与数值稳定措施}
+
+\subsection{分割}
+
+对分支 $s$，查询坐标 $\bm q$ 从固定状态中读出
+\[
+\bm a_s(\bm q)=\bm k_s(\bm q)^\top\Sstate_s\in\R^{170}.
+\]
+其中第一项是读出质量 $\mu_s(\bm q)$。当查询位置几乎没有观测支持时，直接除以很小的质量会造成数值不稳定，因此实现采用
+\begin{equation}
+\epsilon_s=10^{-3}\operatorname{mean}_{\bm q'}\mu_s(\bm q')+10^{-20},
+\qquad
+\widetilde\mu_s(\bm q)=\max(\mu_s(\bm q),\epsilon_s).
+\label{eq:seg-floor-cn}
+\end{equation}
+均值在同一样本的查询坐标上计算，并在反向传播时停止梯度。式~\eqref{eq:seg-floor-cn} 中的最大值只是两个标量之间的数值下限，不比较点特征，也不是全局最大池化。
+
+$\bm a_s(\bm q)$ 的其余列分别保存加权坐标、特征、坐标与特征乘积、坐标平方及特征平方之和。除以 $\widetilde\mu_s$ 后得到 $\bar{\bm x}_s,\bar{\bm g}_s,E_{xg,s},E_{xx,s},E_{gg,s}$。送入分支解码器的描述向量为
+\begin{equation}
+\begin{aligned}
+\bm d_s(\bm q)=[&\bar{\bm g}_s,\bar{\bm x}_s-\bm q,\log\widetilde\mu_s,
+\vect(E_{xg,s}-\bm q\bar{\bm g}_s^\top),\\
+&\operatorname{vech}(E_{xx,s}-\bar{\bm x}_s\bar{\bm x}_s^\top),
+\sqrt{[E_{gg,s}-\bar{\bm g}_s\odot\bar{\bm g}_s]_++10^{-8}}].
+\end{aligned}
+\label{eq:seg-descriptor-cn}
+\end{equation}
+六个部分的维度依次为 $32,3,1,96,6,32$，总计 170。协方差和标准差保留均值无法表达的局部变化；$[\cdot]_+$ 只消除浮点舍入产生的微小负方差。
+
+三个分支各自使用结构相同、参数独立的解码器，其层宽均为 $170\rightarrow160\rightarrow160$，并使用 BatchNorm 和 ReLU。三个输出与 32 维坐标特征和 16 维 ShapeNetPart 类别编码拼接，再经过 $528\rightarrow256\rightarrow128\rightarrow50$ 分割 MLP；前两层后使用 BatchNorm、ReLU 和 0.3 dropout。每个查询坐标独立处理，查询点之间没有池化或交互。
+
+\subsection{分类}
+
+分类阶段不保留坐标或逐点特征。第 $j$ 个状态行的 170 项写成
+\[
+[\mu_{sj},\bm p_{sj},\bm f_{sj},\vect(\bm C_{sj}),
+\operatorname{vech}(\bm Q_{sj}),\bm u_{sj}],
+\]
+分别表示质量、坐标和、特征和、坐标--特征乘积和、对称坐标二阶矩以及特征平方和。行归一化采用
+\begin{equation}
+\widetilde\mu_{sj}=\max\!\left(
+\mu_{sj},10^{-4}R^{-1}\sum_{u=1}^{R}|\mu_{su}|+10^{-20}\right),
+\label{eq:cls-floor-cn}
+\end{equation}
+其中下限在反向传播时停止梯度。令 $\bar\mu_s=R^{-1}\sum_u\widetilde\mu_{su}$，每行除以 $\widetilde\mu_{sj}$ 后得到
+\begin{equation}
+\begin{aligned}
+\bm d^{\rm row}_{sj}=[&
+\bar{\bm g}_{sj},\bar{\bm x}_{sj},
+\log(\widetilde\mu_{sj}/\bar\mu_s),
+\operatorname{vech}(\operatorname{Cov}_{xx,sj}),\\
+&\operatorname{Std}_{g,sj},
+\vect(\operatorname{Cov}_{xg,sj})]\in\R^{170}.
+\end{aligned}
+\label{eq:cls-descriptor-cn}
+\end{equation}
+六个部分的维度为 $32,3,1,6,32,96$。
+
+每个分支使用独立的 $170\rightarrow128\rightarrow128$ LayerNorm--GELU 行编码器。两个可学习评分列分别在固定的 128 行上做 softmax 加权汇总；两份汇总拼接后经过 affine--LayerNorm--GELU 映射，得到 $\bm h_s\in\R^{256}$。这里的 softmax 始终只处理 128 个状态行，其计算量不会随历史点数增长。
+
+中尺度摘要作为参考，细尺度和粗尺度摘要产生修正量
+\[
+\bm\delta=\sigma(a)\tanh(W[\bm h_f;\bm h_b]+\bm b),\qquad
+\bm z_{\rm cls}=h_{\rm cls}(\operatorname{LN}(\bm h_m+\bm\delta)).
+\]
+残差投影从零初始化，$\sigma(a)$ 从 0.1 初始化。分类器 $h_{\rm cls}$ 为 $256\rightarrow256\rightarrow40$，使用 GELU 和 0.3 dropout。三个半径都可学习，只有中尺度半径采用基础学习率的 25 倍并关闭权重衰减，其余参数均使用基础优化设置。
+
+\section{性质证明的补充细节}
+
+令 $F_s(\bm x)=\bm k_s(\bm x)\bm v_s(\bm x)^\top$ 表示一个点对分支 $s$ 的秩一 FWP 写入，则 $\Sstate_s(X)=\sum_{\bm x\in X}F_s(\bm x)$。
+
+\begin{proposition}[顺序、分块与分布式合并]
+对任意点多重集合 $A,B$，
+\[
+\Sstate_s(A\uplus B)=\Sstate_s(A)+\Sstate_s(B),
+\]
+而且状态不依赖点的输入顺序。若多个设备使用相同的已训练编码器、坐标归一化和参考坐标系，则中心设备只需相加各设备独立编码的状态，即可得到与集中处理相同的状态。
+\end{proposition}
+\begin{proof}
+等式两侧展开后都是同一组逐点矩阵 $F_s(\bm x)$ 的有限和。实数运算中，改变求和顺序或分组方式不会改变结果；Float32 实现只可能因累加次序产生微小舍入差异。
+\end{proof}
+
+若保存了待删除子集的聚合状态，同一等式也允许做状态减法。指数遗忘可写成
+\[
+\Sstate_{s,t}=\rho\Sstate_{s,t-1}+\Sstate_s(X_t),\qquad 0\leq\rho\leq1.
+\]
+减法只能移除一个集合的聚合贡献，不能从状态中恢复集合内的单点。
+
+\begin{proposition}[固定保留内存与增量代价]
+若分支 $s$ 的状态有 $R_s$ 行和 $D_s$ 列，保留内存为 $O(\sum_sR_sD_s)$，与历史长度无关。编码 $M$ 个新点的代价为 $O(M\sum_sR_sD_s)$，且无需重访旧点。
+\end{proposition}
+\begin{proof}
+系统只永久保留固定尺寸矩阵。无论先前处理过多少批数据，新批次都只产生尺寸不变的新外积并将其加入现有状态。
+\end{proof}
+
+用 $t\in[0,1]$ 表示一个新证据点的强度，则
+\[
+\Sstate_s(t)=\Sstate_s^{\rm old}+tF_s(\bm x)
+\]
+关于 $t$ 是仿射函数。高斯地址、softmax、带正下限的归一化、仿射层、ReLU 或 GELU 以及稳定化平方根都是连续函数，因此分类 logits 和固定查询坐标的分割 logits 随 $t$ 连续且分段光滑。状态固定时，分割 logits 对查询坐标也具有相同性质。最终 argmax 标签仍可能在决策边界处跳变。
+
+\section{受控筛选与复现信息}
+
+每组受控筛选内部使用相同的数据划分和优化流程，训练 5 轮并采用随机种子 0、1、2。表~\ref{tab:screens-cn} 只列出决定最终结构的配对比较；正文表格报告最终 20 轮结果。
+
+\begin{table}[htbp]
+\centering
+\small
+\caption{五轮受控筛选；正值表示最终保留的设计更好。}
+\label{tab:screens-cn}
+\begin{tabular}{p{0.25\linewidth}p{0.29\linewidth}p{0.36\linewidth}}
+\toprule
+保留设计 & 对照设计 & 配对变化\\
+\midrule
+分割：相同解码器 & 中尺度使用不同解码器 & $+0.30\pm0.30$ 实例；$+0.15\pm0.29$ 类别\\
+分割：不同半径初值 & 相同半径初值 & $+0.74\pm0.42$ 实例；$-0.05\pm0.33$ 类别\\
+分割：统一归一化键 & 混合键定义 & $+0.35\pm0.16$ 实例；$+0.85\pm0.37$ 类别\\
+分类：中尺度残差 & 直接拼接 & $+2.67\pm1.60$ 干净；$+3.78\pm1.71$ 扰动\\
+分类：中尺度半径 25 倍学习率 & 基础半径学习率 & $+0.13\pm1.03$ 干净；$+0.91\pm0.33$ 扰动\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+分割变化对应实例 mIoU 和类别 mIoU。相同解码器还减少 24,480 个参数。分类的学习率设置主要依据其稳定的分布变化准确率收益，而不是波动较大的干净准确率变化。
+
+随论文发布的最小代码包含 341,909 参数的分割模型、529,426 参数的分类模型、数据加载、训练循环、状态操作检查和三随机种子参考值。\texttt{CODE\_REPRODUCTION.md} 说明环境、数据目录、运行命令和流式接口。验证可加性时应使用评估模式，因为此时 BatchNorm 使用证明所假定的固定运行统计量。
+
+\end{document}

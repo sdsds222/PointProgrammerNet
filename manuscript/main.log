@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.1)  9 SEP 2026 08:31
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.9.1)  10 SEP 2026 06:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -734,7 +734,7 @@ Package cleveref Info: no abbreviation of names on input line 7852.
 ==> First Aid for cleveref.sty applied!
 \c@proposition=\count323
 \c@corollary=\count324
-LaTeX Font Info:    Trying to load font information for T1+txr on input line 16
+LaTeX Font Info:    Trying to load font information for T1+txr on input line 20
 .
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\t1txr.fd
 File: t1txr.fd 2000/12/15 v3.1
@@ -742,48 +742,48 @@ File: t1txr.fd 2000/12/15 v3.1
 (main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 16.
+LaTeX Font Info:    Checking defaults for OML/txmi/m/it on input line 20.
 LaTeX Font Info:    Trying to load font information for OML+txmi on input line 
-16.
+20.
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\omltxmi.fd
 File: omltxmi.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMS/txsy/m/n on input line 20.
 LaTeX Font Info:    Trying to load font information for OMS+txsy on input line 
-16.
+20.
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\omstxsy.fd
 File: omstxsy.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for OMX/txex/m/n on input line 16.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for OMX/txex/m/n on input line 20.
 LaTeX Font Info:    Trying to load font information for OMX+txex on input line 
-16.
+20.
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\omxtxex.fd
 File: omxtxex.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for U/txexa/m/n on input line 16.
-LaTeX Font Info:    Trying to load font information for U+txexa on input line 1
-6.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for U/txexa/m/n on input line 20.
+LaTeX Font Info:    Trying to load font information for U+txexa on input line 2
+0.
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\utxexa.fd
 File: utxexa.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 16.
-LaTeX Font Info:    ... okay on input line 16.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 20.
+LaTeX Font Info:    ... okay on input line 20.
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mk
 ii
@@ -819,7 +819,7 @@ fg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 LaTeX Encoding Info:    Redeclaring text command \k (encoding T1) on input line
- 16.
+ 20.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -855,64 +855,69 @@ LaTeX Encoding Info:    Redeclaring text command \k (encoding T1) on input line
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 16.
+Package hyperref Info: Link coloring OFF on input line 20.
 (main.out) (main.out)
 \@outlinefile=\write4
 \openout4 = `main.out'.
 
-LaTeX Font Info:    Trying to load font information for OT1+txr on input line 2
-6.
+LaTeX Font Info:    Trying to load font information for OT1+txr on input line 3
+1.
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\ot1txr.fd
 File: ot1txr.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for U+txmia on input line 2
-6.
+LaTeX Font Info:    Trying to load font information for U+txmia on input line 3
+1.
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\utxmia.fd
 File: utxmia.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 26.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 31.
 
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 26.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 31.
 
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/amsfonts\umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Trying to load font information for U+txsyc on input line 2
-6.
+LaTeX Font Info:    Trying to load font information for U+txsyc on input line 3
+1.
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\utxsyc.fd
 File: utxsyc.fd 2000/12/15 v3.1
 )
-LaTeX Font Info:    Trying to load font information for TS1+txr on input line 2
-7.
+LaTeX Font Info:    Trying to load font information for TS1+txr on input line 3
+2.
 
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\ts1txr.fd
 File: ts1txr.fd 2000/12/15 v3.1
 )
-Underfull \hbox (badness 10000) in alignment at lines 32--32
+Underfull \hbox (badness 10000) in alignment at lines 37--37
 [][]
  []
 
 LaTeX Font Info:    Font shape `T1/txr/b/n' in size <10> not available
-(Font)              Font shape `T1/txr/bx/n' tried instead on input line 34.
-LaTeX Font Info:    Trying to load font information for T1+txss on input line 4
-9.
+(Font)              Font shape `T1/txr/bx/n' tried instead on input line 39.
+
+Underfull \hbox (badness 10000) in paragraph at lines 48--49
+[]\T1/txr/m/n/10 a three-scale second-order fast-weight-programmer
+ []
+
+LaTeX Font Info:    Trying to load font information for T1+txss on input line 5
+0.
 (C:\Users\13633\AppData\Local\Programs\MiKTeX\tex/latex/txfonts\t1txss.fd
 File: t1txss.fd 2000/12/15 v3.1
 )
 LaTeX Font Info:    Font shape `T1/txss/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 49.
+(Font)              scaled to size 9.49997pt on input line 50.
 LaTeX Font Info:    Font shape `T1/txss/b/n' in size <10> not available
-(Font)              Font shape `T1/txss/bx/n' tried instead on input line 49.
+(Font)              Font shape `T1/txss/bx/n' tried instead on input line 50.
 LaTeX Font Info:    Font shape `T1/txss/bx/n' will be
-(Font)              scaled to size 9.49997pt on input line 49.
+(Font)              scaled to size 9.49997pt on input line 50.
 
 Overfull \hbox (1.90001pt too wide) has occurred while \output is active
  []
@@ -920,117 +925,125 @@ Overfull \hbox (1.90001pt too wide) has occurred while \output is active
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<def>-command' on input line 49.
+(hyperref)                removing `\<def>-command' on input line 50.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\cnotenum' on input line 49.
+(hyperref)                removing `\cnotenum' on input line 50.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\<def>-command' on input line 49.
+(hyperref)                removing `\<def>-command' on input line 50.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\@corref' on input line 49.
+(hyperref)                removing `\@corref' on input line 50.
 
 [1{C:/Users/13633/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/13
 633/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 
 ]
-<../figures/fig00_pointprogrammernet_architecture.pdf, id=114, 520.34402pt x 44
+<../figures/fig00_pointprogrammernet_architecture.pdf, id=101, 520.34402pt x 44
 4.4605pt>
 File: ../figures/fig00_pointprogrammernet_architecture.pdf Graphic file (type p
 df)
 <use ../figures/fig00_pointprogrammernet_architecture.pdf>
 Package pdftex.def Info: ../figures/fig00_pointprogrammernet_architecture.pdf  
-used on input line 60.
+used on input line 73.
 (pdftex.def)             Requested size: 522.0pt x 445.89717pt.
 
 (../figures/fig00_pointprogrammernet_architecture_caption.tex
 LaTeX Font Info:    Font shape `T1/txr/b/n' in size <8> not available
 (Font)              Font shape `T1/txr/bx/n' tried instead on input line 1.
 ) [2]
-Underfull \hbox (badness 2096) in paragraph at lines 129--130
-[]\T1/txr/m/n/10 The state is affine in $\OML/txmi/m/it/10 t$\T1/txr/m/n/10 . R
-BFs, soft-max, affine
+Underfull \vbox (badness 1430) has occurred while \output is active []
+
+ [3 <../figures/fig00_pointprogrammernet_architecture.pdf>]
+Overfull \hbox (2.59006pt too wide) detected at line 156
+[][][][]\OML/txmi/bx/it/10 U[] \OT1/txr/m/n/10 = [][]([][](\OML/txmi/bx/it/10 T
+[]\OT1/txr/m/n/10 ))\OML/txmi/m/it/10 ;  \OML/txmi/bx/it/10 h[] \OT1/txr/m/n/10
+ = \OML/txmi/m/it/10 H[]\OT1/txr/m/n/10 ([](\OML/txmi/bx/it/10 U[]T[]\OT1/txr/m
+/n/10 )) \OMS/txsy/m/n/10 2 \U/msb/m/n/10 R[]\OML/txmi/m/it/10 :
  []
 
-(../tables/table01_segmentation_accuracy.tex)
-(../tables/table02_classification_accuracy.tex)
-<../figures/fig01_additivity_fixed_state.pdf, id=148, 520.34402pt x 220.42351pt
+
+Underfull \hbox (badness 1009) in paragraph at lines 184--185
+[]\T1/txr/m/n/10 Retained mem-ory is $\OML/txmi/m/it/10 O\OT1/txr/m/n/10 ([][] 
+\OML/txmi/m/it/10 R[]D[]\OT1/txr/m/n/10 )$ \T1/txr/m/n/10 and is in-de-pen-dent
+ of
+ []
+
+[4]
+<../figures/fig01_additivity_fixed_state.pdf, id=159, 520.34402pt x 220.42351pt
 >
 File: ../figures/fig01_additivity_fixed_state.pdf Graphic file (type pdf)
 <use ../figures/fig01_additivity_fixed_state.pdf>
 Package pdftex.def Info: ../figures/fig01_additivity_fixed_state.pdf  used on i
-nput line 154.
-(pdftex.def)             Requested size: 511.55777pt x 216.71313pt.
-
-(../figures/fig01_additivity_fixed_state_caption.tex)
-<../figures/fig02_state_operations.pdf, id=149, 520.34402pt x 220.42351pt>
-File: ../figures/fig02_state_operations.pdf Graphic file (type pdf)
-<use ../figures/fig02_state_operations.pdf>
-Package pdftex.def Info: ../figures/fig02_state_operations.pdf  used on input l
-ine 161.
-(pdftex.def)             Requested size: 511.55777pt x 216.71313pt.
-
-(../figures/fig02_state_operations_caption.tex)
-<../figures/fig04_streaming_efficiency.pdf, id=150, 520.34402pt x 220.42351pt>
+nput line 244.
+(pdftex.def)             Requested size: 252.0pt x 106.75055pt.
+ (../figures/fig01_additivity_fixed_state_caption.tex)
+<../figures/fig04_streaming_efficiency.pdf, id=160, 520.34402pt x 220.42351pt>
 File: ../figures/fig04_streaming_efficiency.pdf Graphic file (type pdf)
 <use ../figures/fig04_streaming_efficiency.pdf>
 Package pdftex.def Info: ../figures/fig04_streaming_efficiency.pdf  used on inp
-ut line 168.
-(pdftex.def)             Requested size: 511.55777pt x 216.71313pt.
+ut line 249.
+(pdftex.def)             Requested size: 252.0pt x 106.75055pt.
 
 (../figures/fig04_streaming_efficiency_caption.tex)
-<../figures/fig03_controlled_ablation.pdf, id=151, 520.34402pt x 234.8775pt>
+<../figures/fig02_state_operations.pdf, id=161, 520.34402pt x 220.42351pt>
+File: ../figures/fig02_state_operations.pdf Graphic file (type pdf)
+<use ../figures/fig02_state_operations.pdf>
+Package pdftex.def Info: ../figures/fig02_state_operations.pdf  used on input l
+ine 256.
+(pdftex.def)             Requested size: 252.0pt x 106.75055pt.
+
+(../figures/fig02_state_operations_caption.tex)
+<../figures/fig03_controlled_ablation.pdf, id=162, 520.34402pt x 234.8775pt>
 File: ../figures/fig03_controlled_ablation.pdf Graphic file (type pdf)
 <use ../figures/fig03_controlled_ablation.pdf>
 Package pdftex.def Info: ../figures/fig03_controlled_ablation.pdf  used on inpu
-t line 175.
-(pdftex.def)             Requested size: 511.55777pt x 230.92383pt.
-
-(../figures/fig03_controlled_ablation_caption.tex) [3] (main.bbl) [4] [5 <../fi
-gures/fig00_pointprogrammernet_architecture.pdf>] [6 <../figures/fig01_additivi
-ty_fixed_state.pdf> <../figures/fig02_state_operations.pdf>] [7 <../figures/fig
-04_streaming_efficiency.pdf> <../figures/fig03_controlled_ablation.pdf>]
-(main.aux)
+t line 263.
+(pdftex.def)             Requested size: 252.0pt x 113.75058pt.
+ [5 <../figures/fig01_additivity_fixed_state.pdf>] [6 <../figures/fig04_streami
+ng_efficiency.pdf> <../figures/fig02_state_operations.pdf> <../figures/fig03_co
+ntrolled_ablation.pdf>]
+(main.bbl) [7] (main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: EBD2DF4CF5FF73CB5F988614DA55F5C4;2508.
+(rerunfilecheck)             Checksum: 26EE58C08264D8C140F50A99C62E9A6B;2135.
  ) 
 Here is how much of TeX's memory you used:
- 14386 strings out of 467871
- 234349 string characters out of 5418377
- 680668 words of memory out of 5000000
- 42938 multiletter control sequences out of 15000+600000
- 696531 words of font info for 157 fonts, out of 8000000 for 9000
+ 14378 strings out of 467871
+ 233529 string characters out of 5418377
+ 679668 words of memory out of 5000000
+ 42937 multiletter control sequences out of 15000+600000
+ 700581 words of font info for 163 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,1364b,546s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,79p,1550b,520s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\13633\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ectt
 0800.pk><C:/Users/13633/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfon
 ts/symbols/msbm10.pfb><C:/Users/13633/AppData/Local/Programs/MiKTeX/fonts/type1
 /public/txfonts/rtcxr.pfb><C:/Users/13633/AppData/Local/Programs/MiKTeX/fonts/t
 ype1/public/txfonts/rtxb.pfb><C:/Users/13633/AppData/Local/Programs/MiKTeX/font
 s/type1/public/txfonts/rtxbmi.pfb><C:/Users/13633/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/txfonts/rtxi.pfb><C:/Users/13633/AppData/Local/Programs/MiK
-TeX/fonts/type1/public/txfonts/rtxmi.pfb><C:/Users/13633/AppData/Local/Programs
-/MiKTeX/fonts/type1/public/txfonts/rtxr.pfb><C:/Users/13633/AppData/Local/Progr
-ams/MiKTeX/fonts/type1/public/txfonts/txex.pfb><C:/Users/13633/AppData/Local/Pr
-ograms/MiKTeX/fonts/type1/public/txfonts/txsy.pfb><C:/Users/13633/AppData/Local
-/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/13633/AppData/Lo
-cal/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/13633/AppData
-/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/13633/AppData
-/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/13633/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/13633/AppDat
-a/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
-Output written on main.pdf (7 pages, 617168 bytes).
+/fonts/type1/public/txfonts/rtxmi.pfb><C:/Users/13633/AppData/Local/Programs/Mi
+KTeX/fonts/type1/public/txfonts/rtxr.pfb><C:/Users/13633/AppData/Local/Programs
+/MiKTeX/fonts/type1/public/txfonts/txex.pfb><C:/Users/13633/AppData/Local/Progr
+ams/MiKTeX/fonts/type1/public/txfonts/txexa.pfb><C:/Users/13633/AppData/Local/P
+rograms/MiKTeX/fonts/type1/public/txfonts/txsy.pfb><C:/Users/13633/AppData/Loca
+l/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvb8a.pfb><C:/Users/13633/AppData/L
+ocal/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/13633/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/Users/13633/AppDat
+a/Local/Programs/MiKTeX/fonts/type1/urw/times/utmbi8a.pfb><C:/Users/13633/AppDa
+ta/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb><C:/Users/13633/AppDa
+ta/Local/Programs/MiKTeX/fonts/type1/urw/times/utmri8a.pfb>
+Output written on main.pdf (7 pages, 633148 bytes).
 PDF statistics:
- 331 PDF objects out of 1000 (max. 8388607)
- 61 named destinations out of 1000 (max. 500000)
- 162 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 337 PDF objects out of 1000 (max. 8388607)
+ 59 named destinations out of 1000 (max. 500000)
+ 138 words of extra memory for PDF output out of 10000 (max. 10000000)
 

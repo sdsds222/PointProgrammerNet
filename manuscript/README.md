@@ -1,6 +1,6 @@
 # PointProgrammerNet manuscript draft
 
-This draft targets **Pattern Recognition Letters (Elsevier)** and follows the journal's two-column `elsarticle` layout with the included `prletter.sty` journal style.
+This draft targets **Pattern Recognition Letters (Elsevier)** and follows the journal's two-column `elsarticle` layout with the included `prletter.sty` journal style. The English main paper is seven pages. It contains the state layout, streaming workflow, both task readouts, core proofs, principal experiments, and a worked distributed-inference example. Exact normalization details, complete proofs, state-operation definitions, and controlled ablations remain in `supplement.tex`.
 
 Author metadata:
 
@@ -15,7 +15,10 @@ Compile from this directory:
 
 ```powershell
 tectonic --keep-logs --keep-intermediates main.tex
+tectonic --keep-logs --keep-intermediates supplement.tex
 ```
 
-The final manuscript must remain within the journal's seven-page initial-submission limit, including figures, tables, and references. Research highlights (three to five bullets, at most 85 characters each) and the journal's authorship-confirmation form should be prepared as separate submission files.
+The manuscript remains within the journal's seven-page initial-submission limit, including figures, tables, and references. Code instructions are in `../CODE_REPRODUCTION.md`. Research highlights and the journal's authorship-confirmation form remain separate submission files.
+
+Chinese proofreading sources are in `../review/main_chinese.tex` and `../review/supplement_chinese.tex`; they follow the English main-paper and supplementary-material division without a page limit.
 

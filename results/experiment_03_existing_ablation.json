@@ -9,63 +9,94 @@
   "comparisons": [
     {
       "task": "Segmentation",
-      "label": "Multiscale radii",
-      "control_model": "fwp_dual_read_symmetric_state_seg",
-      "treatment_model": "fwp_dual_read_partition_multiscale_seg",
-      "source": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts_seg\\dual_read_concat_probe\\segmentation_results.json",
+      "label": "Equal branch decoder",
+      "control_model": "fwp_dual_read_partition_multiscale_seg",
+      "treatment_model": "fwp_dual_read_strict_equal_partition_multiscale_seg",
+      "source": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts_seg\\strict_equal_seg_readout_probe\\segmentation_results.json",
       "metrics": [
         {
           "key": "instance_miou",
           "label": "Instance mIoU",
           "paired_change": [
-            0.27741617667864205,
-            0.7119914342502653,
-            0.529566869795957
+            0.3586974790187014,
+            0.6299983030868219,
+            -0.10107277876676335
           ],
-          "mean_change": 0.5063248269082882,
-          "sd_change": 0.1781741807736741
+          "mean_change": 0.29587433444625333,
+          "sd_change": 0.3017463529756087
         },
         {
           "key": "category_miou",
           "label": "Category mIoU",
           "paired_change": [
-            0.11175496259834006,
-            -0.00125246557945502,
-            0.4639140560945805
+            0.20325140571672762,
+            0.4859771026498265,
+            -0.22973743986490547
           ],
-          "mean_change": 0.19147218437115518,
-          "sd_change": 0.1980927388993387
+          "mean_change": 0.15316368950054957,
+          "sd_change": 0.29432794756708863
+        }
+      ]
+    },
+    {
+      "task": "Segmentation",
+      "label": "Multiscale radii",
+      "control_model": "fwp_dual_read_strict_equal_partition_equal_radius_seg",
+      "treatment_model": "fwp_dual_read_strict_equal_partition_multiscale_seg",
+      "source": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts_seg\\strict_equal_seg_readout_probe\\segmentation_results.json",
+      "metrics": [
+        {
+          "key": "instance_miou",
+          "label": "Instance mIoU",
+          "paired_change": [
+            0.7355777999747204,
+            1.2649324955435475,
+            0.2301837456891036
+          ],
+          "mean_change": 0.7435646804024572,
+          "sd_change": 0.4224721580771596
+        },
+        {
+          "key": "category_miou",
+          "label": "Category mIoU",
+          "paired_change": [
+            0.10567094105783781,
+            0.2438508489679947,
+            -0.5058502621918564
+          ],
+          "mean_change": -0.052109490722007955,
+          "sd_change": 0.3257646773445056
         }
       ]
     },
     {
       "task": "Segmentation",
       "label": "Unified partition key",
-      "control_model": "fwp_dual_read_equal_state_width_uniform_lr_seg",
-      "treatment_model": "fwp_dual_read_partition_multiscale_seg",
-      "source": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts_seg\\dual_read_concat_probe\\segmentation_results.json",
+      "control_model": "fwp_dual_read_strict_equal_mixed_key_multiscale_seg",
+      "treatment_model": "fwp_dual_read_strict_equal_partition_multiscale_seg",
+      "source": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts_seg\\strict_equal_seg_readout_probe\\segmentation_results.json",
       "metrics": [
         {
           "key": "instance_miou",
           "label": "Instance mIoU",
           "paired_change": [
-            -0.03445702807607631,
-            0.1716306182524221,
-            0.15137243503927778
+            0.35572994571184324,
+            0.5371678256482681,
+            0.15732651840455958
           ],
-          "mean_change": 0.09618200840520785,
-          "sd_change": 0.09274523127486772
+          "mean_change": 0.35007476325489034,
+          "sd_change": 0.1551211150222484
         },
         {
           "key": "category_miou",
           "label": "Category mIoU",
           "paired_change": [
-            0.34415278302731167,
-            0.8949470172424867,
-            1.216464492685887
+            0.36035926439970467,
+            0.9250612994505474,
+            1.2513169635152508
           ],
-          "mean_change": 0.8185214309852284,
-          "sd_change": 0.36019678175310493
+          "mean_change": 0.845579175788501,
+          "sd_change": 0.36804842198610105
         }
       ]
     },

@@ -1,0 +1,76 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand*\HyPL@Entry[1]{}
+\citation{qi2017pointnet}
+\citation{qi2017pointnetplusplus}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}引言}{1}{section.1}\protected@file@percent }
+\citation{qi2017pointnet}
+\citation{qi2017pointnetplusplus}
+\citation{zaheer2017deepsets}
+\citation{lee2019settransformer}
+\citation{katharopoulos2020transformers}
+\citation{schlag2021linear}
+\citation{wu20153dshapenets}
+\citation{chang2015shapenet}
+\citation{yi2016scalable}
+\@writefile{toc}{\contentsline {section}{\numberline {2}相关工作}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}方法}{3}{section.3}\protected@file@percent }
+\newlabel{eq:add}{{1}{3}{方法}{equation.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}将一个点写入状态}{3}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:content}{{2}{3}{将一个点写入状态}{equation.2}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces PointProgrammerNet 架构。历史点被删除后，红色路径传递三个等尺寸可加 FWP 状态。分割头在查询坐标 $\bm  {q}$ 处读取每个状态，再拼接解码上下文、坐标跳连和类别编码。分类头解码固定状态行，并将有界的细尺度和粗尺度残差加到中尺度状态摘要上。两个任务头都不重建解码点集，也不对其执行池化。}}{4}{figure.1}\protected@file@percent }
+\newlabel{fig:architecture}{{1}{4}{PointProgrammerNet 架构。历史点被删除后，红色路径传递三个等尺寸可加 FWP 状态。分割头在查询坐标 $\bm q$ 处读取每个状态，再拼接解码上下文、坐标跳连和类别编码。分类头解码固定状态行，并将有界的细尺度和粗尺度残差加到中尺度状态摘要上。两个任务头都不重建解码点集，也不对其执行池化。}{figure.1}{}}
+\newlabel{eq:key}{{4}{5}{将一个点写入状态}{equation.4}{}}
+\newlabel{eq:value}{{5}{5}{将一个点写入状态}{equation.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 单个点写入的值向量。每个状态行都具有这 170 列。}}{6}{table.1}\protected@file@percent }
+\newlabel{eq:single-write}{{6}{6}{将一个点写入状态}{equation.6}{}}
+\newlabel{eq:state}{{7}{6}{将一个点写入状态}{equation.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}分割读出}{7}{subsection.3.2}\protected@file@percent }
+\newlabel{eq:effective-weight}{{8}{7}{分割读出}{equation.8}{}}
+\newlabel{eq:read-moments}{{10}{7}{分割读出}{equation.10}{}}
+\newlabel{eq:query-decode}{{11}{7}{分割读出}{equation.11}{}}
+\newlabel{eq:seg}{{12}{8}{分割读出}{equation.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}分类读出}{8}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:row-sums}{{13}{8}{分类读出}{equation.13}{}}
+\newlabel{eq:row-descriptor}{{15}{9}{分类读出}{equation.15}{}}
+\newlabel{eq:state-summary}{{16}{9}{分类读出}{equation.16}{}}
+\newlabel{eq:cls}{{18}{9}{分类读出}{equation.18}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}形式性质}{10}{subsection.3.4}\protected@file@percent }
+\newlabel{eq:distributed}{{19}{10}{分布式等价性}{equation.19}{}}
+\citation{schlag2021linear}
+\newlabel{eq:path}{{20}{11}{证据和查询的连续性}{equation.20}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.5}未来的帧级 delta 规则}{11}{subsection.3.5}\protected@file@percent }
+\newlabel{eq:delta}{{21}{11}{未来的帧级 delta 规则}{equation.21}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}实验}{11}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}实验协议}{11}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}准确率}{12}{subsection.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces ShapeNetPart 部件分割结果。输入为 XYZ，每个样本 1,024 个点，结果为三个随机种子的均值 $\pm $ 总体标准差。}}{12}{table.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces ModelNet40 分类结果。结果为三个随机种子的均值 $\pm $ 总体标准差。}}{12}{table.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}可加性与固定状态}{12}{subsection.4.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 可加流式处理与固定保留内存。有序和乱序分块写入都能在浮点累加误差范围内复现单批次 FWP 状态。无论点流多长，三个 $128\times 170$ 的 float32 状态始终占用 255 KiB；保存 XYZ 坐标所需的内存则随观测数量线性增长。}}{13}{figure.2}\protected@file@percent }
+\newlabel{fig:additivity_fixed_state}{{2}{13}{可加流式处理与固定保留内存。有序和乱序分块写入都能在浮点累加误差范围内复现单批次 FWP 状态。无论点流多长，三个 $128\times 170$ 的 float32 状态始终占用 255 KiB；保存 XYZ 坐标所需的内存则随观测数量线性增长。}{figure.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}状态操作}{13}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}流式效率}{13}{subsection.4.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 流式状态操作。（a）追加或合并、帧删除和指数衰减相对于独立重建 FWP 状态的最大相对误差，测试对象为 32 个 ShapeNetPart 物体。（b）普通加法使状态幅值随帧数增长；指数衰减在不改变状态尺寸的情况下限制旧帧的影响。}}{14}{figure.3}\protected@file@percent }
+\newlabel{fig:streaming-state-operations}{{3}{14}{流式状态操作。（a）追加或合并、帧删除和指数衰减相对于独立重建 FWP 状态的最大相对误差，测试对象为 32 个 ShapeNetPart 物体。（b）普通加法使状态幅值随帧数增长；指数衰减在不改变状态尺寸的情况下限制旧帧的影响。}{figure.3}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces 设备内存常驻点流的 FWP 状态构建开销。（a）增量更新只处理新增的 256 点帧，而重建会处理所有累计点。数据为四条点流、每次 30 次重复、七轮交错试验的挂钟时间中位数，误差线表示观测范围。（b）速度提升随历史长度增加，同时增量状态与重建状态保持数值等价。}}{14}{figure.4}\protected@file@percent }
+\newlabel{fig:streaming-efficiency}{{4}{14}{设备内存常驻点流的 FWP 状态构建开销。（a）增量更新只处理新增的 256 点帧，而重建会处理所有累计点。数据为四条点流、每次 30 次重复、七轮交错试验的挂钟时间中位数，误差线表示观测范围。（b）速度提升随历史长度增加，同时增量状态与重建状态保持数值等价。}{figure.4}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 三个随机种子的筛选消融实验。分割部分将最终模型分别与不等分支解码器、相同初始半径和混合空间地址公式进行比较；纯状态分类部分比较中尺度参考残差与直接拼接，并改变中尺度半径学习率。柱高表示配对均值变化，误差线表示总体标准差。每次筛选训练五个 epoch。}}{15}{figure.5}\protected@file@percent }
+\newlabel{fig:architecture_ablation}{{5}{15}{三个随机种子的筛选消融实验。分割部分将最终模型分别与不等分支解码器、相同初始半径和混合空间地址公式进行比较；纯状态分类部分比较中尺度参考残差与直接拼接，并改变中尺度半径学习率。柱高表示配对均值变化，误差线表示总体标准差。每次筛选训练五个 epoch。}{figure.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}受控架构审查}{15}{subsection.4.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}讨论与局限}{15}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}分布式推理示例}{16}{subsection.5.1}\protected@file@percent }
+\bibstyle{plain}
+\bibdata{../manuscript/references}
+\bibcite{chang2015shapenet}{1}
+\bibcite{katharopoulos2020transformers}{2}
+\bibcite{lee2019settransformer}{3}
+\bibcite{qi2017pointnet}{4}
+\@writefile{toc}{\contentsline {section}{\numberline {6}结论}{17}{section.6}\protected@file@percent }
+\bibcite{qi2017pointnetplusplus}{5}
+\bibcite{schlag2021linear}{6}
+\bibcite{wu20153dshapenets}{7}
+\bibcite{yi2016scalable}{8}
+\bibcite{zaheer2017deepsets}{9}
+\gdef \@abspage@last{18}

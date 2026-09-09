@@ -1,0 +1,145 @@
+\documentclass[review,12pt,authoryear]{elsarticle}
+\usepackage{amsmath,amssymb,amsthm,bm,booktabs,url}
+\usepackage[hidelinks]{hyperref}
+\setlength{\emergencystretch}{2em}
+\newtheorem{proposition}{Proposition}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Sstate}{\mathbf{S}}
+\newcommand{\vect}{\operatorname{vec}}
+\begin{document}
+\begin{frontmatter}
+\title{Supplementary material for: PointProgrammerNet: A Fixed-state additive FWP network for streaming point-cloud recognition}
+\author[a]{Dian Yu}
+\address[a]{University of New South Wales, Sydney, NSW 2052, Australia}
+\end{frontmatter}
+
+The main paper specifies the point encoder, spatial addresses, additive outer-product state, task readouts, and principal experiments. This supplement records only implementation details needed for exact reproduction or for checking the stated properties.
+
+\section{Exact readout and numerical stabilization}
+
+\subsection{Segmentation}
+
+For branch \(s\), a query coordinate \(\bm q\) reads the fixed state as
+\[
+\bm a_s(\bm q)=\bm k_s(\bm q)^\top\Sstate_s\in\R^{170}.
+\]
+The first component is the read mass \(\mu_s(\bm q)\). The implementation prevents unstable division in nearly empty regions with
+\begin{equation}
+\epsilon_s=10^{-3}\operatorname{mean}_{\bm q'}\mu_s(\bm q')+10^{-20},
+\qquad
+\widetilde\mu_s(\bm q)=\max(\mu_s(\bm q),\epsilon_s).
+\label{eq:seg-floor}
+\end{equation}
+The mean is taken over the query coordinates of one sample and is detached from the gradient. The maximum in Equation~\eqref{eq:seg-floor} is only a scalar numerical floor. It neither compares point features nor performs global maximum pooling.
+
+The remaining columns of \(\bm a_s(\bm q)\) contain weighted coordinate, feature, cross-product, coordinate-square, and feature-square sums. Dividing them by \(\widetilde\mu_s\) gives \(\bar{\bm x}_s,\bar{\bm g}_s,E_{xg,s},E_{xx,s},E_{gg,s}\). The decoded descriptor is
+\begin{equation}
+\begin{aligned}
+\bm d_s(\bm q)=[&\bar{\bm g}_s,\bar{\bm x}_s-\bm q,\log\widetilde\mu_s,
+\vect(E_{xg,s}-\bm q\bar{\bm g}_s^\top),\\
+&\operatorname{vech}(E_{xx,s}-\bar{\bm x}_s\bar{\bm x}_s^\top),
+\sqrt{[E_{gg,s}-\bar{\bm g}_s\odot\bar{\bm g}_s]_++10^{-8}}].
+\end{aligned}
+\label{eq:seg-descriptor}
+\end{equation}
+Its block dimensions are \(32,3,1,96,6,32\), totalling 170. The covariance and standard-deviation terms retain variation lost by a mean. The clamp \([\cdot]_+\) removes small negative variances caused by floating-point roundoff.
+
+Each branch independently applies the same \(170\rightarrow160\rightarrow160\) BatchNorm--ReLU decoder. The three outputs are concatenated with a 32-dimensional coordinate feature and the 16-dimensional ShapeNetPart category code. The segmentation MLP is \(528\rightarrow256\rightarrow128\rightarrow50\), with BatchNorm, ReLU, and dropout 0.3 after its first two affine layers. Queries are processed independently; there is no pooling or interaction over decoded query points.
+
+\subsection{Classification}
+
+Classification retains no coordinates or point features. For row \(j\), the 170 stored entries are partitioned as
+\[
+[\mu_{sj},\bm p_{sj},\bm f_{sj},\vect(\bm C_{sj}),
+\operatorname{vech}(\bm Q_{sj}),\bm u_{sj}],
+\]
+where the blocks are mass, coordinate sum, feature sum, coordinate--feature sum, symmetric coordinate second moment, and squared-feature sum. Row normalization uses
+\begin{equation}
+\widetilde\mu_{sj}=\max\!\left(
+\mu_{sj},10^{-4}R^{-1}\sum_{u=1}^{R}|\mu_{su}|+10^{-20}\right).
+\label{eq:cls-floor}
+\end{equation}
+The lower bound is detached during back-propagation. With \(\bar\mu_s=R^{-1}\sum_u\widetilde\mu_{su}\), division by \(\widetilde\mu_{sj}\) produces
+\begin{equation}
+\begin{aligned}
+\bm d^{\rm row}_{sj}=[&
+\bar{\bm g}_{sj},\bar{\bm x}_{sj},
+\log(\widetilde\mu_{sj}/\bar\mu_s),
+\operatorname{vech}(\operatorname{Cov}_{xx,sj}),\\
+&\operatorname{Std}_{g,sj},
+\vect(\operatorname{Cov}_{xg,sj})]\in\R^{170}.
+\end{aligned}
+\label{eq:cls-descriptor}
+\end{equation}
+The six block dimensions are \(32,3,1,6,32,96\).
+
+Each branch has an independent \(170\rightarrow128\rightarrow128\) LayerNorm--GELU row encoder. Two learned score columns form two softmax-weighted summaries over the fixed 128 rows. Their concatenation passes through an affine--LayerNorm--GELU map to give \(\bm h_s\in\R^{256}\). This softmax always processes 128 state rows and therefore does not grow with the number of observed points.
+
+The middle summary is the reference. Fine and broad summaries produce
+\[
+\bm\delta=\sigma(a)\tanh(W[\bm h_f;\bm h_b]+\bm b),\qquad
+\bm z_{\rm cls}=h_{\rm cls}(\operatorname{LN}(\bm h_m+\bm\delta)).
+\]
+The residual projection is initialized to zero and \(\sigma(a)\) to 0.1. The classifier \(h_{\rm cls}\) is \(256\rightarrow256\rightarrow40\), with GELU and dropout 0.3. All radii are learned. Only the middle radius uses a \(25\times\) learning-rate multiplier and zero weight decay; all other parameters use the base optimizer settings.
+
+\section{Proof details}
+
+Let \(F_s(\bm x)=\bm k_s(\bm x)\bm v_s(\bm x)^\top\) be one point's rank-one FWP write. The encoder state is \(\Sstate_s(X)=\sum_{\bm x\in X}F_s(\bm x)\).
+
+\begin{proposition}[Order, chunks, and devices]
+For point multisets \(A,B\),
+\[
+\Sstate_s(A\uplus B)=\Sstate_s(A)+\Sstate_s(B),
+\]
+and the state is invariant to point order. Devices using identical trained encoders, coordinate normalization, and reference frames therefore obtain the centralized state by adding their independently encoded states.
+\end{proposition}
+\begin{proof}
+Both sides expand into the same finite collection of per-point matrices \(F_s(\bm x)\). Reordering or regrouping a finite sum does not change it in real arithmetic. Float32 results may differ only through accumulation order.
+\end{proof}
+
+The same identity permits subtraction when the state of the removable subset is available. Exponential forgetting follows from
+\[
+\Sstate_{s,t}=\rho\Sstate_{s,t-1}+\Sstate_s(X_t),\qquad 0\leq\rho\leq1.
+\]
+Subtraction removes an aggregate contribution; it does not reconstruct its individual points.
+
+\begin{proposition}[Retained memory and update cost]
+With \(R_s\) rows and \(D_s\) columns per branch, retained memory is \(O(\sum_sR_sD_s)\), independent of history length. Encoding \(M\) new points costs \(O(M\sum_sR_sD_s)\) and does not revisit earlier observations.
+\end{proposition}
+\begin{proof}
+Only the fixed matrices persist. A new chunk contributes new outer products of the same dimensions regardless of the number of earlier chunks.
+\end{proof}
+
+For evidence strength \(t\in[0,1]\),
+\[
+\Sstate_s(t)=\Sstate_s^{\rm old}+tF_s(\bm x)
+\]
+is affine in \(t\). Gaussian addresses, softmax, positive-floor normalization, affine layers, ReLU or GELU, and stabilized square roots are continuous. Hence classification logits and fixed-query segmentation logits vary continuously and piecewise smoothly with \(t\). For a fixed state, segmentation logits have the same property with respect to the query coordinate. A hard argmax label can still change discontinuously at a decision boundary.
+
+\section{Controlled screens and reproducibility}
+
+All screens use the same data split and optimization protocol within a comparison, five epochs, and seeds 0, 1, and 2. Table~\ref{tab:screens} reports paired changes of the retained design relative to the named alternative. These short runs select structural choices; the main tables report final 20-epoch results.
+
+\begin{table}[htbp]
+\centering
+\caption{Controlled five-epoch screens. Positive changes favor the retained design.}
+\label{tab:screens}
+\small
+\begin{tabular}{p{0.25\linewidth}p{0.30\linewidth}p{0.35\linewidth}}
+\toprule
+Retained choice & Paired alternative & Paired change\\
+\midrule
+Seg.: equal decoders & unequal middle decoder & \(+0.30\pm0.30\) instance; \(+0.15\pm0.29\) category\\
+Seg.: distinct radius starts & equal radius starts & \(+0.74\pm0.42\) instance; \(-0.05\pm0.33\) category\\
+Seg.: common normalized key & mixed key definitions & \(+0.35\pm0.16\) instance; \(+0.85\pm0.37\) category\\
+Cls.: middle residual & direct concatenation & \(+2.67\pm1.60\) clean; \(+3.78\pm1.71\) shifted\\
+Cls.: \(25\times\) middle-radius LR & base radius LR & \(+0.13\pm1.03\) clean; \(+0.91\pm0.33\) shifted\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The segmentation columns report instance and category mIoU. Equal decoders also remove 24,480 parameters. The classification learning-rate choice is retained for its consistent shifted-accuracy gain rather than its variable clean-accuracy change.
+
+The released minimal code contains the 341,909-parameter segmenter and 529,426-parameter classifier, dataset loaders, training loops, state-operation checks, and exact three-seed reference values. \texttt{CODE\_REPRODUCTION.md} specifies the environment, dataset layout, commands, and streaming API. Additivity tests should run in evaluation mode because BatchNorm then uses the fixed running statistics assumed by the proof.
+
+\end{document}

@@ -1,6 +1,6 @@
 {
   "experiment": "PointProgrammerNet streaming state operations",
-  "model": "PointProgrammerNet (fwp_dual_read_partition_multiscale_seg checkpoint)",
+  "model": "PointProgrammerNet (fwp_dual_read_strict_equal_partition_multiscale_seg checkpoint)",
   "samples": 32,
   "points_per_sample": 1024,
   "frames": 16,
@@ -9,20 +9,20 @@
   "device": "cuda",
   "operations": {
     "append": {
-      "mean_relative_error": 2.3607543653270113e-07,
-      "max_relative_error": 4.779725486514508e-07
+      "mean_relative_error": 2.1083702961277595e-07,
+      "max_relative_error": 4.999866405341891e-07
     },
     "merge": {
-      "mean_relative_error": 2.3578670038659766e-07,
-      "max_relative_error": 4.63714428633466e-07
+      "mean_relative_error": 2.132596961246236e-07,
+      "max_relative_error": 4.276040783679491e-07
     },
     "remove": {
-      "mean_relative_error": 3.2271620398205414e-07,
-      "max_relative_error": 8.853054964674811e-07
+      "mean_relative_error": 3.0293824693217175e-07,
+      "max_relative_error": 9.704407375465962e-07
     },
     "decay": {
-      "mean_relative_error": 1.9215455893117905e-07,
-      "max_relative_error": 3.47243229725791e-07
+      "mean_relative_error": 1.7701862020658155e-07,
+      "max_relative_error": 3.375453161424957e-07
     }
   },
   "state_norm_curve": [
@@ -33,78 +33,78 @@
     },
     {
       "frame": 2,
-      "additive": 1.9091172218322754,
-      "decay": 1.8146530389785767
+      "additive": 1.9085419178009033,
+      "decay": 1.8146507740020752
     },
     {
       "frame": 3,
-      "additive": 2.835306406021118,
-      "decay": 2.5651228427886963
+      "additive": 2.838414192199707,
+      "decay": 2.569693088531494
     },
     {
       "frame": 4,
-      "additive": 3.740274429321289,
-      "decay": 3.2189364433288574
+      "additive": 3.729124069213867,
+      "decay": 3.209505319595337
     },
     {
       "frame": 5,
-      "additive": 4.608391761779785,
-      "decay": 3.7710251808166504
+      "additive": 4.603826999664307,
+      "decay": 3.769963264465332
     },
     {
       "frame": 6,
-      "additive": 5.498307228088379,
-      "decay": 4.289351463317871
+      "additive": 5.484426975250244,
+      "decay": 4.279760360717773
     },
     {
       "frame": 7,
-      "additive": 6.370540618896484,
-      "decay": 4.738584041595459
+      "additive": 6.344675540924072,
+      "decay": 4.718810081481934
     },
     {
       "frame": 8,
-      "additive": 7.3109211921691895,
-      "decay": 5.212782859802246
+      "additive": 7.282981872558594,
+      "decay": 5.194032192230225
     },
     {
       "frame": 9,
-      "additive": 8.19803237915039,
-      "decay": 5.585857391357422
+      "additive": 8.179323196411133,
+      "decay": 5.578741073608398
     },
     {
       "frame": 10,
-      "additive": 9.103282928466797,
-      "decay": 5.938331604003906
+      "additive": 9.082399368286133,
+      "decay": 5.9306721687316895
     },
     {
       "frame": 11,
-      "additive": 10.01713752746582,
-      "decay": 6.265013217926025
+      "additive": 9.99500560760498,
+      "decay": 6.257554054260254
     },
     {
       "frame": 12,
-      "additive": 10.93720817565918,
-      "decay": 6.565975189208984
+      "additive": 10.915693283081055,
+      "decay": 6.560699462890625
     },
     {
       "frame": 13,
-      "additive": 11.823141098022461,
-      "decay": 6.799506187438965
+      "additive": 11.794445037841797,
+      "decay": 6.78842830657959
     },
     {
       "frame": 14,
-      "additive": 12.742244720458984,
-      "decay": 7.043332099914551
+      "additive": 12.700339317321777,
+      "decay": 7.021920680999756
     },
     {
       "frame": 15,
-      "additive": 13.670167922973633,
-      "decay": 7.273780822753906
+      "additive": 13.62640380859375,
+      "decay": 7.254256248474121
     },
     {
       "frame": 16,
-      "additive": 14.5689697265625,
-      "decay": 7.450837135314941
+      "additive": 14.514397621154785,
+      "decay": 7.423316955566406
     }
   ]
 }

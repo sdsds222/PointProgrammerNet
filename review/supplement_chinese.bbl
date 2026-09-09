@@ -1,0 +1,8 @@
+\begin{thebibliography}{1}
+
+\bibitem{schlag2021linear}
+Imanol Schlag, Kazuki Irie, and J{\"u}rgen Schmidhuber.
+\newblock Linear transformers are secretly fast weight programmers.
+\newblock In {\em ICML}, volume 139 of {\em PMLR}, pages 9355--9366, 2021.
+
+\end{thebibliography}

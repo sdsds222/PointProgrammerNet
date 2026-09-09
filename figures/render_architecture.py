@@ -152,15 +152,20 @@ def render():
     draw_text(c, 430.5, 298, "historical points may now be discarded", 6.6, REGULAR, PURPLE)
 
     # Join all three states into one fixed-state bus, then feed both heads.
+    bus_y = 286
+    seg_drop_x = 157.5
+    cls_drop_x = 331.5
     c.setStrokeColorRGB(*PURPLE); c.setLineWidth(1.0)
     c.line(502, 335.5, 502, 403.5)
     for sy in [403.5, 369.5, 335.5]:
         c.line(493, sy, 502, sy)
-    c.line(502, 287, 502, 335.5)
-    c.line(147, 287, 502, 287)
-    arrow(c, [(147, 287), (147, 273)], PURPLE)
-    arrow(c, [(270, 287), (270, 231), (285, 231)], PURPLE)
-    draw_text(c, 289, 279.5, "fixed states only", 6.5, BOLD, PURPLE)
+    c.line(502, bus_y, 502, 335.5)
+    # Leave a deliberate gap for the label so no rule crosses the text.
+    c.line(seg_drop_x, bus_y, 216, bus_y)
+    c.line(306, bus_y, 502, bus_y)
+    c.line(seg_drop_x, bus_y, seg_drop_x, 273)
+    c.line(cls_drop_x, bus_y, cls_drop_x, 273)
+    draw_text(c, 261, bus_y - 2.2, "fixed states only", 6.5, BOLD, PURPLE)
 
     # Segmentation panel.
     px, py, pw, ph = 12, 18, 243, 255
@@ -174,13 +179,15 @@ def render():
     box(c, 112, 57, 91, 30, ["pointwise MLP"], GRAY_FILL, GREEN, size=7.0)
     box(c, 112, 25, 91, 23, ["part logits at q"], GREEN_FILL, GREEN, size=6.8)
 
-    arrow(c, [(147, 273), (147, 249)], PURPLE)
+    arrow(c, [(seg_drop_x, 273), (seg_drop_x, 249)], PURPLE)
     arrow(c, [(92, 231), (112, 231)], GREEN)
     arrow(c, [(157.5, 213), (157.5, 193)], GREEN)
     arrow(c, [(58.5, 213), (58.5, 193)], GREEN)
-    arrow(c, [(58.5, 158), (58.5, 125), (120, 125)], GREEN)
     arrow(c, [(157.5, 158), (157.5, 145)], GREEN)
-    arrow(c, [(92, 122.5), (120, 122.5)], GREEN)
+    # Independent ports make the U-Net-like coordinate skip and category code
+    # unambiguous: they never share an edge before concatenation.
+    arrow(c, [(92, 175.5), (106, 175.5), (106, 134), (120, 134)], GREEN)
+    arrow(c, [(92, 122.5), (110, 122.5), (110, 116), (120, 116)], GREEN)
     arrow(c, [(158, 105), (158, 87)], GREEN)
     arrow(c, [(158, 57), (158, 48)], GREEN)
     draw_text(c, 29, 41, "independent queries", 6.3, BOLD, GREEN, "left")
@@ -199,6 +206,7 @@ def render():
     box(c, 310, 57, 56, 27, ["LN + MLP"], GRAY_FILL, ORANGE, size=6.8)
     box(c, 300, 25, 76, 23, ["class logits"], ORANGE_FILL, ORANGE, size=6.9)
 
+    arrow(c, [(cls_drop_x, 273), (cls_drop_x, 249)], PURPLE)
     arrow(c, [(378, 231), (399, 231)], ORANGE)
     c.setStrokeColorRGB(*ORANGE); c.setLineWidth(0.9)
     c.line(445, 213, 445, 202)

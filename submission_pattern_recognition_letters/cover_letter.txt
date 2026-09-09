@@ -1,10 +1,10 @@
 Dear Editor,
 
-Please consider our manuscript, “PointProgrammerNet: Fixed-state additive programs for streaming point-cloud understanding,” for publication in Pattern Recognition Letters.
+Please consider our manuscript, “A Fixed-state additive FWP network for streaming point-cloud recognition,” for publication in Pattern Recognition Letters.
 
-The paper studies point-cloud recognition under a strict streaming constraint: once an observation has been written, it may be discarded. PointProgrammerNet represents each point cloud with three fixed-size additive fast-weight states. Independently encoded chunks can be merged, removed, or decayed, and both segmentation and classification operate without pooling over a reconstructed point set.
+The paper studies point-cloud recognition under a strict streaming constraint: once an observation has been written, it may be discarded. PointProgrammerNet represents each point cloud with three fixed-size additive fast-weight states. Edge devices can encode disjoint point subsets locally, transmit only these matrices, and recover the centralized state by addition at a server. States can also be removed or decayed, and both segmentation and classification operate without pooling over a reconstructed point set.
 
-The paper proves permutation invariance, chunk equivalence, fixed retained memory, and continuous dependence on new evidence. Experiments on ShapeNetPart and ModelNet40 measure the accuracy cost of this constraint. A streaming benchmark also shows that incremental state construction becomes 5.54 times faster than rebuilding at 8,192 accumulated points.
+The paper proves permutation invariance, exact chunk and distributed equivalence, fixed retained memory, and continuous dependence on new evidence. Experiments on ShapeNetPart and ModelNet40 measure the accuracy cost of this constraint. A streaming benchmark also shows that incremental state construction becomes 6.06 times faster than rebuilding at 8,192 accumulated points.
 
 We believe the work fits Pattern Recognition Letters because it presents a compact recognition architecture, clear mathematical properties, and controlled empirical evidence for streaming point-cloud processing.
 

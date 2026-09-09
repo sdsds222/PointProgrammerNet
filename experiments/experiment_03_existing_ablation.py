@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-SEG_SOURCE = ROOT / "artifacts_seg/dual_read_concat_probe/segmentation_results.json"
+STRICT_SEG_SOURCE = ROOT / "artifacts_seg/strict_equal_seg_readout_probe/segmentation_results.json"
 CLS_FUSION_SOURCE = ROOT / "artifacts/pointprogrammer_multiscale_concat_probe/results.json"
 CLS_RATE_SOURCE = ROOT / "artifacts/pointprogrammer_main_radius_rate_probe/results.json"
 
@@ -32,11 +32,23 @@ CLS_EXPECTED = {
 COMPARISONS = [
     {
         "task": "Segmentation",
-        "label": "Multiscale radii",
-        "source": SEG_SOURCE,
+        "label": "Equal branch decoder",
+        "source": STRICT_SEG_SOURCE,
         "expected": SEG_EXPECTED,
-        "control": "fwp_dual_read_symmetric_state_seg",
-        "treatment": "fwp_dual_read_partition_multiscale_seg",
+        "control": "fwp_dual_read_partition_multiscale_seg",
+        "treatment": "fwp_dual_read_strict_equal_partition_multiscale_seg",
+        "metrics": [
+            ("instance_miou", "Instance mIoU"),
+            ("category_miou", "Category mIoU"),
+        ],
+    },
+    {
+        "task": "Segmentation",
+        "label": "Multiscale radii",
+        "source": STRICT_SEG_SOURCE,
+        "expected": SEG_EXPECTED,
+        "control": "fwp_dual_read_strict_equal_partition_equal_radius_seg",
+        "treatment": "fwp_dual_read_strict_equal_partition_multiscale_seg",
         "metrics": [
             ("instance_miou", "Instance mIoU"),
             ("category_miou", "Category mIoU"),
@@ -45,10 +57,10 @@ COMPARISONS = [
     {
         "task": "Segmentation",
         "label": "Unified partition key",
-        "source": SEG_SOURCE,
+        "source": STRICT_SEG_SOURCE,
         "expected": SEG_EXPECTED,
-        "control": "fwp_dual_read_equal_state_width_uniform_lr_seg",
-        "treatment": "fwp_dual_read_partition_multiscale_seg",
+        "control": "fwp_dual_read_strict_equal_mixed_key_multiscale_seg",
+        "treatment": "fwp_dual_read_strict_equal_partition_multiscale_seg",
         "metrics": [
             ("instance_miou", "Instance mIoU"),
             ("category_miou", "Category mIoU"),

@@ -1,7 +1,7 @@
 {
   "experiment": "PointProgrammerNet additive streaming and fixed state",
-  "model": "PointProgrammerNet (fwp_dual_read_partition_multiscale_seg checkpoint)",
-  "checkpoint": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts_seg\\partition_multiscale_full\\checkpoints\\fwp_dual_read_partition_multiscale_seg_seed0.pt",
+  "model": "PointProgrammerNet (fwp_dual_read_strict_equal_partition_multiscale_seg checkpoint)",
+  "checkpoint": "C:\\Users\\13633\\Desktop\\TopoContour-Mamba\\fwpnet_refactor\\artifacts_seg\\strict_equal_partition_multiscale_full\\checkpoints\\fwp_dual_read_strict_equal_partition_multiscale_seg_seed0.pt",
   "device": "cuda",
   "dtype": "torch.float32",
   "samples": 32,
@@ -27,68 +27,68 @@
     "ordered": [
       {
         "chunks": 2,
-        "mean_relative_error": 3.196502120772493e-07,
-        "max_relative_error": 4.383824148135318e-07
+        "mean_relative_error": 2.9164797865632863e-07,
+        "max_relative_error": 3.979748726123944e-07
       },
       {
         "chunks": 4,
-        "mean_relative_error": 3.4624198974597675e-07,
-        "max_relative_error": 4.662516346343182e-07
+        "mean_relative_error": 3.0777650295021886e-07,
+        "max_relative_error": 4.1332643263558566e-07
       },
       {
         "chunks": 8,
-        "mean_relative_error": 3.572081936908944e-07,
-        "max_relative_error": 4.7459087682000245e-07
+        "mean_relative_error": 3.190887696291611e-07,
+        "max_relative_error": 4.352105520410987e-07
       },
       {
         "chunks": 16,
-        "mean_relative_error": 3.621208293225209e-07,
-        "max_relative_error": 4.818723482458154e-07
+        "mean_relative_error": 3.249766109547636e-07,
+        "max_relative_error": 4.38082167875109e-07
       },
       {
         "chunks": 32,
-        "mean_relative_error": 3.6741187159350375e-07,
-        "max_relative_error": 4.897173084827955e-07
+        "mean_relative_error": 3.2787846748760785e-07,
+        "max_relative_error": 4.428850672866247e-07
       }
     ],
     "shuffled": [
       {
         "chunks": 2,
-        "mean_relative_error": 3.388558980077505e-07,
-        "max_relative_error": 4.6030928047002817e-07
+        "mean_relative_error": 3.038045974790293e-07,
+        "max_relative_error": 4.2522242438280955e-07
       },
       {
         "chunks": 4,
-        "mean_relative_error": 3.4682409477682086e-07,
-        "max_relative_error": 4.782793325830426e-07
+        "mean_relative_error": 3.1169770409178454e-07,
+        "max_relative_error": 4.201055503472162e-07
       },
       {
         "chunks": 8,
-        "mean_relative_error": 3.560116397238744e-07,
-        "max_relative_error": 4.743972397136531e-07
+        "mean_relative_error": 3.1931233479554066e-07,
+        "max_relative_error": 4.359155809652293e-07
       },
       {
         "chunks": 16,
-        "mean_relative_error": 3.616033268372121e-07,
-        "max_relative_error": 4.803616207027517e-07
+        "mean_relative_error": 3.257750336160825e-07,
+        "max_relative_error": 4.44165834778687e-07
       },
       {
         "chunks": 32,
-        "mean_relative_error": 3.687520404582756e-07,
-        "max_relative_error": 4.7207356601575157e-07
+        "mean_relative_error": 3.30712168761238e-07,
+        "max_relative_error": 4.509773532390682e-07
       }
     ]
   },
   "per_state_max_error_at_32_chunks": {
     "ordered": {
-      "main": 5.304339083522791e-07,
-      "fine": 4.978023753210437e-07,
-      "broad": 4.3076701672362105e-07
+      "main": 5.223449193181295e-07,
+      "fine": 4.4393360099093115e-07,
+      "broad": 4.143048215610179e-07
     },
     "shuffled": {
-      "main": 5.15550482305116e-07,
-      "fine": 4.778791549142625e-07,
-      "broad": 4.2869481831075973e-07
+      "main": 5.125393727212213e-07,
+      "fine": 4.581730195241107e-07,
+      "broad": 4.155741919475986e-07
     }
   },
   "memory_curve": [

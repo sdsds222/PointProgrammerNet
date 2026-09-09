@@ -1,0 +1,100 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{qi2017pointnet}
+\citation{qi2017pointnetplusplus}
+\@writefile{toc}{\contentsline {section}{\numberline {1}引言}{1}{section.1}\protected@file@percent }
+\citation{qi2017pointnet}
+\citation{qi2017pointnetplusplus}
+\citation{zaheer2017deepsets}
+\citation{jegou2010vlad}
+\citation{arandjelovic2016netvlad}
+\citation{uy2018pointnetvlad}
+\citation{lee2019settransformer}
+\citation{jaegle2022perceiverio}
+\@writefile{toc}{\contentsline {section}{\numberline {2}相关工作}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}对称池化与度量邻域}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}基于学习中心的固定尺寸摘要}{2}{subsection.2.2}\protected@file@percent }
+\citation{katharopoulos2020transformers}
+\citation{schlag2021linear}
+\citation{liang2024pointmamba}
+\citation{wu20153dshapenets}
+\citation{yi2016scalable}
+\citation{chang2015shapenet}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}对固定隐变量集合的注意力}{3}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}有界的循环状态}{3}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}本架构拒绝做的事}{3}{subsection.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}方法}{3}{section.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces 各族集合摘要所保留的性质。「顺序无关写入」指摘要不依赖点被吸收的顺序；「可加状态」指并集的摘要等于各摘要之和；「有界状态」指保留内存不随观测点数增长；「坐标读取」指仅凭摘要即可在被请求的位置上求值。}}{4}{table.1}\protected@file@percent }
+\newlabel{tab:family-comparison-cn}{{1}{4}{各族集合摘要所保留的性质。「顺序无关写入」指摘要不依赖点被吸收的顺序；「可加状态」指并集的摘要等于各摘要之和；「有界状态」指保留内存不随观测点数增长；「坐标读取」指仅凭摘要即可在被请求的位置上求值。}{table.1}{}}
+\newlabel{eq:content-cn}{{1}{4}{方法}{equation.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}可加状态的构造}{4}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:key-cn}{{2}{4}{可加状态的构造}{equation.2}{}}
+\newlabel{eq:value-cn}{{3}{4}{可加状态的构造}{equation.3}{}}
+\citation{schlag2021linear}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces PointProgrammerNet 架构。红色路径承载三个等尺寸可加 FWP 状态，此时历史点已被丢弃。分割头在查询坐标 $\bm  {q}$ 处读取每个状态，然后拼接解码得到的上下文、坐标跳连与类别编码。分类头解码固定行，并把一个有界的“细—粗”残差加到中尺度摘要上。两个读出头都不重建也不池化任何解码点集。}}{5}{figure.1}\protected@file@percent }
+\newlabel{eq:single-write-cn}{{4}{5}{可加状态的构造}{equation.4}{}}
+\newlabel{eq:state-cn}{{5}{5}{可加状态的构造}{equation.5}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces 单个点写入的值。每个状态行都有这 170 列。}}{6}{table.2}\protected@file@percent }
+\newlabel{tab:value-layout-cn}{{2}{6}{单个点写入的值。每个状态行都有这 170 列。}{table.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}任务读出}{6}{subsection.3.2}\protected@file@percent }
+\newlabel{eq:effective-read-cn}{{6}{6}{任务读出}{equation.6}{}}
+\newlabel{eq:seg-floor-cn}{{7}{6}{任务读出}{equation.7}{}}
+\newlabel{eq:query-descriptor-cn}{{8}{6}{任务读出}{equation.8}{}}
+\newlabel{eq:seg-cn}{{9}{7}{任务读出}{equation.9}{}}
+\newlabel{eq:cls-floor-cn}{{10}{7}{任务读出}{equation.10}{}}
+\newlabel{eq:cls-descriptor-cn}{{11}{7}{任务读出}{equation.11}{}}
+\newlabel{eq:state-summary-cn}{{12}{7}{任务读出}{equation.12}{}}
+\newlabel{eq:cls-cn}{{13}{7}{任务读出}{equation.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}流式性质}{8}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:add-cn}{{14}{8}{流式性质}{equation.14}{}}
+\newlabel{prop:order-cn}{{1}{8}{顺序、分块与设备}{proposition.1}{}}
+\newlabel{eq:distributed-cn}{{15}{8}{流式性质}{equation.15}{}}
+\newlabel{prop:memory-cn}{{2}{8}{保留内存与更新代价}{proposition.2}{}}
+\newlabel{eq:continuous-cn}{{16}{8}{流式性质}{equation.16}{}}
+\citation{schlag2021linear}
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces ShapeNetPart 分割（XYZ 输入）。PointProgrammerNet 从不在解码查询点上做池化。}}{9}{table.3}\protected@file@percent }
+\newlabel{tab:segmentation_accuracy_cn}{{3}{9}{ShapeNetPart 分割（XYZ 输入）。PointProgrammerNet 从不在解码查询点上做池化。}{table.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces ModelNet40 分类（1,024 点）。Density 指固定的密度梯度偏移。}}{9}{table.4}\protected@file@percent }
+\newlabel{tab:classification_accuracy_cn}{{4}{9}{ModelNet40 分类（1,024 点）。Density 指固定的密度梯度偏移。}{table.4}{}}
+\newlabel{eq:delta-cn}{{17}{9}{流式性质}{equation.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}实验}{9}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}协议与精度}{9}{subsection.4.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces 并行状态与单一状态的对比。5 个 epoch 的筛选实验，三个种子，2,048 训练形状与 512 测试形状。单状态对照保留完整模型与初始化，但移除两路辅助读取。}}{10}{table.5}\protected@file@percent }
+\newlabel{tab:parallel_states_cn}{{5}{10}{并行状态与单一状态的对比。5 个 epoch 的筛选实验，三个种子，2,048 训练形状与 512 测试形状。单状态对照保留完整模型与初始化，但移除两路辅助读取。}{table.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}并行状态与单一状态}{10}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:parallel-cn}{{4.2}{10}{并行状态与单一状态}{subsection.4.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}可加性与更新代价}{10}{subsection.4.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces 可加流式处理与固定保留内存。有序与打乱的分块写入都能复现单批次 FWP 状态，误差仅为浮点累加误差。三个 $128\times 170$ 的 float32 状态始终占用 255 KiB，而保存 XYZ 坐标的开销随观测数线性增长。}}{11}{figure.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces 5 个 epoch 的受控筛选。正值表示支持保留方案。}}{11}{table.6}\protected@file@percent }
+\newlabel{tab:screens-cn}{{6}{11}{5 个 epoch 的受控筛选。正值表示支持保留方案。}{table.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}状态代数的实际验证}{11}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}最终读出头的受控筛选}{11}{subsection.4.5}\protected@file@percent }
+\newlabel{sec:screens-cn}{{4.5}{11}{最终读出头的受控筛选}{subsection.4.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces 设备端点流的 FWP 状态构建代价。（a）增量更新只处理一个新的 256 点帧，而重建要处理全部累计点。数值为四个点流、7 次交错试验、每次 30 遍重复的中位墙钟时延，误差棒表示观测范围。（b）加速比随历史长度增长，同时增量状态与重建状态在数值上保持等价。}}{12}{figure.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}讨论与局限}{12}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}分布式推理示例}{12}{subsection.5.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces 流式状态运算。（a）在 32 个 ShapeNetPart 物体上，追加/合并、帧移除与指数衰减相对于独立重建的 FWP 状态的最大相对误差。（b）普通相加使状态幅值随帧数增长，而指数衰减在不改变状态尺寸的前提下限制了旧帧的影响。}}{13}{figure.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}表示的限制在哪里}{13}{subsection.5.2}\protected@file@percent }
+\newlabel{sec:bottleneck-cn}{{5.2}{13}{表示的限制在哪里}{subsection.5.2}{}}
+\bibstyle{unsrt}
+\bibdata{references}
+\bibcite{qi2017pointnet}{1}
+\bibcite{qi2017pointnetplusplus}{2}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 三种子、5 个 epoch 的架构筛选。柱表示配对均值变化，误差棒表示总体标准差。分割部分检验等宽分支解码器、不同半径初始化，以及统一的归一化空间地址；分类部分检验残差式与拼接式分支摘要，以及中尺度半径学习率。}}{14}{figure.5}\protected@file@percent }
+\newlabel{fig:architecture-ablation-cn}{{5}{14}{三种子、5 个 epoch 的架构筛选。柱表示配对均值变化，误差棒表示总体标准差。分割部分检验等宽分支解码器、不同半径初始化，以及统一的归一化空间地址；分类部分检验残差式与拼接式分支摘要，以及中尺度半径学习率。}{figure.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}结论}{14}{section.6}\protected@file@percent }
+\bibcite{zaheer2017deepsets}{3}
+\bibcite{jegou2010vlad}{4}
+\bibcite{arandjelovic2016netvlad}{5}
+\bibcite{uy2018pointnetvlad}{6}
+\bibcite{lee2019settransformer}{7}
+\bibcite{jaegle2022perceiverio}{8}
+\bibcite{katharopoulos2020transformers}{9}
+\bibcite{schlag2021linear}{10}
+\bibcite{liang2024pointmamba}{11}
+\bibcite{wu20153dshapenets}{12}
+\bibcite{yi2016scalable}{13}
+\bibcite{chang2015shapenet}{14}
+\gdef \@abspage@last{16}

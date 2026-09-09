@@ -1,0 +1,151 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyperFirstAtBeginDocument{\AtBeginDocument}
+\HyperFirstAtBeginDocument{\ifx\hyper@anchor\@undefined
+\global\let\oldcontentsline\contentsline
+\gdef\contentsline#1#2#3#4{\oldcontentsline{#1}{#2}{#3}}
+\global\let\oldnewlabel\newlabel
+\gdef\newlabel#1#2{\newlabelxx{#1}#2}
+\gdef\newlabelxx#1#2#3#4#5#6{\oldnewlabel{#1}{{#2}{#3}}}
+\AtEndDocument{\ifx\hyper@anchor\@undefined
+\let\contentsline\oldcontentsline
+\let\newlabel\oldnewlabel
+\fi}
+\fi}
+\global\let\hyper@last\relax 
+\gdef\HyperFirstAtBeginDocument#1{#1}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{qi2017pointnet}
+\citation{qi2017pointnetplusplus}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\citation{qi2017pointnet}
+\citation{qi2017pointnetplusplus}
+\citation{zaheer2017deepsets}
+\citation{jegou2010vlad}
+\citation{arandjelovic2016netvlad}
+\citation{uy2018pointnetvlad}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Symmetric pooling and metric neighborhoods}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Fixed-size summaries over learned centers}{2}{subsection.2.2}\protected@file@percent }
+\citation{lee2019settransformer}
+\citation{jaegle2022perceiverio}
+\citation{katharopoulos2020transformers}
+\citation{schlag2021linear}
+\citation{liang2024pointmamba}
+\citation{wu20153dshapenets}
+\citation{yi2016scalable}
+\citation{chang2015shapenet}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Attention over a fixed latent set}{3}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Bounded recurrent state}{3}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}What this architecture refuses to do}{3}{subsection.2.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Properties retained by families of set summaries. ``Order-free write'' means the summary does not depend on the order in which points are absorbed; ``additive state'' means the summary of a union equals the sum of the summaries; ``bounded state'' means retained memory does not grow with the number of observed points; ``coordinate read'' means the summary alone can be evaluated at a requested position.}}{4}{table.1}\protected@file@percent }
+\newlabel{tab:family-comparison}{{1}{4}{Properties retained by families of set summaries. ``Order-free write'' means the summary does not depend on the order in which points are absorbed; ``additive state'' means the summary of a union equals the sum of the summaries; ``bounded state'' means retained memory does not grow with the number of observed points; ``coordinate read'' means the summary alone can be evaluated at a requested position}{table.1}{}}
+\newlabel{tab:family-comparison@cref}{{[table][1][]1}{[1][3][]4}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Method}{4}{section.3}\protected@file@percent }
+\newlabel{eq:content-main}{{1}{4}{Method}{equation.3.1}{}}
+\newlabel{eq:content-main@cref}{{[equation][1][]1}{[1][4][]4}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Additive state construction}{4}{subsection.3.1}\protected@file@percent }
+\newlabel{eq:key-main}{{2}{4}{Additive state construction}{equation.3.2}{}}
+\newlabel{eq:key-main@cref}{{[equation][2][]2}{[1][4][]4}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces PointProgrammerNet architecture. Red paths carry the three equal-size additive FWP states after historical points have been discarded. The segmentation head reads each state at query coordinate $\bm  {q}$, then concatenates the decoded context, coordinate skip, and category code. The classification head decodes fixed rows and adds a bounded fine--broad residual to the middle-state summary. Neither head reconstructs or pools over a decoded point set.}}{5}{figure.1}\protected@file@percent }
+\newlabel{fig:architecture}{{1}{5}{PointProgrammerNet architecture. Red paths carry the three equal-size additive FWP states after historical points have been discarded. The segmentation head reads each state at query coordinate $\bm q$, then concatenates the decoded context, coordinate skip, and category code. The classification head decodes fixed rows and adds a bounded fine--broad residual to the middle-state summary. Neither head reconstructs or pools over a decoded point set}{figure.1}{}}
+\newlabel{fig:architecture@cref}{{[figure][1][]1}{[1][4][]5}}
+\newlabel{eq:value-main}{{3}{5}{Additive state construction}{equation.3.3}{}}
+\newlabel{eq:value-main@cref}{{[equation][3][]3}{[1][5][]5}}
+\citation{schlag2021linear}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces The value written by one point. Every state row has these 170 columns.}}{6}{table.2}\protected@file@percent }
+\newlabel{tab:value-layout-main}{{2}{6}{The value written by one point. Every state row has these 170 columns}{table.2}{}}
+\newlabel{tab:value-layout-main@cref}{{[table][2][]2}{[1][5][]6}}
+\newlabel{eq:single-write-main}{{4}{6}{Additive state construction}{equation.3.4}{}}
+\newlabel{eq:single-write-main@cref}{{[equation][4][]4}{[1][5][]6}}
+\newlabel{eq:state-main}{{5}{6}{Additive state construction}{equation.3.5}{}}
+\newlabel{eq:state-main@cref}{{[equation][5][]5}{[1][6][]6}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Task readouts}{6}{subsection.3.2}\protected@file@percent }
+\newlabel{eq:effective-read-main}{{6}{6}{Task readouts}{equation.3.6}{}}
+\newlabel{eq:effective-read-main@cref}{{[equation][6][]6}{[1][6][]6}}
+\newlabel{eq:seg-floor}{{7}{7}{Task readouts}{equation.3.7}{}}
+\newlabel{eq:seg-floor@cref}{{[equation][7][]7}{[1][6][]7}}
+\newlabel{eq:query-descriptor-main}{{8}{7}{Task readouts}{equation.3.8}{}}
+\newlabel{eq:query-descriptor-main@cref}{{[equation][8][]8}{[1][7][]7}}
+\newlabel{eq:seg-main}{{9}{7}{Task readouts}{equation.3.9}{}}
+\newlabel{eq:seg-main@cref}{{[equation][9][]9}{[1][7][]7}}
+\newlabel{eq:cls-floor}{{10}{7}{Task readouts}{equation.3.10}{}}
+\newlabel{eq:cls-floor@cref}{{[equation][10][]10}{[1][7][]7}}
+\newlabel{eq:cls-descriptor}{{11}{7}{Task readouts}{equation.3.11}{}}
+\newlabel{eq:cls-descriptor@cref}{{[equation][11][]11}{[1][7][]7}}
+\newlabel{eq:state-summary-main}{{12}{7}{Task readouts}{equation.3.12}{}}
+\newlabel{eq:state-summary-main@cref}{{[equation][12][]12}{[1][7][]7}}
+\newlabel{eq:cls-main}{{13}{8}{Task readouts}{equation.3.13}{}}
+\newlabel{eq:cls-main@cref}{{[equation][13][]13}{[1][7][]8}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Streaming properties}{8}{subsection.3.3}\protected@file@percent }
+\newlabel{eq:add-main}{{14}{8}{Streaming properties}{equation.3.14}{}}
+\newlabel{eq:add-main@cref}{{[equation][14][]14}{[1][8][]8}}
+\newlabel{prop:order}{{1}{8}{Order, chunks, and devices}{proposition.1}{}}
+\newlabel{prop:order@cref}{{[proposition][1][]1}{[1][8][]8}}
+\newlabel{eq:distributed-main}{{15}{8}{Streaming properties}{equation.3.15}{}}
+\newlabel{eq:distributed-main@cref}{{[equation][15][]15}{[1][8][]8}}
+\citation{schlag2021linear}
+\newlabel{prop:memory}{{2}{9}{Retained memory and update cost}{proposition.2}{}}
+\newlabel{prop:memory@cref}{{[proposition][2][]2}{[1][8][]9}}
+\newlabel{eq:continuous-main}{{16}{9}{Streaming properties}{equation.3.16}{}}
+\newlabel{eq:continuous-main@cref}{{[equation][16][]16}{[1][9][]9}}
+\newlabel{eq:delta-main}{{17}{9}{Streaming properties}{equation.3.17}{}}
+\newlabel{eq:delta-main@cref}{{[equation][17][]17}{[1][9][]9}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Experiments}{9}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Protocol and accuracy}{9}{subsection.4.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces ShapeNetPart segmentation with XYZ input. PointProgrammerNet never pools over decoded query points.}}{10}{table.3}\protected@file@percent }
+\newlabel{tab:segmentation_accuracy}{{3}{10}{ShapeNetPart segmentation with XYZ input. PointProgrammerNet never pools over decoded query points}{table.3}{}}
+\newlabel{tab:segmentation_accuracy@cref}{{[table][3][]3}{[1][9][]10}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces ModelNet40 classification with 1,024 points. Density denotes the fixed density-gradient shift.}}{10}{table.4}\protected@file@percent }
+\newlabel{tab:classification_accuracy}{{4}{10}{ModelNet40 classification with 1,024 points. Density denotes the fixed density-gradient shift}{table.4}{}}
+\newlabel{tab:classification_accuracy@cref}{{[table][4][]4}{[1][9][]10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Parallel states versus a single state}{10}{subsection.4.2}\protected@file@percent }
+\newlabel{sec:parallel}{{4.2}{10}{Parallel states versus a single state}{subsection.4.2}{}}
+\newlabel{sec:parallel@cref}{{[subsection][2][4]4.2}{[1][10][]10}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Additivity and update cost}{10}{subsection.4.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Parallel states against a single state. Five-epoch screens, three seeds, on 2,048 training and 512 test shapes. The single-state control retains the full model and initialization but removes both auxiliary reads.}}{11}{table.5}\protected@file@percent }
+\newlabel{tab:parallel_states}{{5}{11}{Parallel states against a single state. Five-epoch screens, three seeds, on 2,048 training and 512 test shapes. The single-state control retains the full model and initialization but removes both auxiliary reads}{table.5}{}}
+\newlabel{tab:parallel_states@cref}{{[table][5][]5}{[1][10][]11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Additive streaming and fixed retained memory. Ordered and shuffled chunk writes reproduce the single-batch FWP state up to floating-point accumulation error. The three $128\times 170$ float32 states occupy 255 KiB regardless of stream length, whereas stored XYZ coordinates grow linearly with the number of observations.}}{11}{figure.2}\protected@file@percent }
+\newlabel{fig:additivity_fixed_state}{{2}{11}{Additive streaming and fixed retained memory. Ordered and shuffled chunk writes reproduce the single-batch FWP state up to floating-point accumulation error. The three $128\times 170$ float32 states occupy 255 KiB regardless of stream length, whereas stored XYZ coordinates grow linearly with the number of observations}{figure.2}{}}
+\newlabel{fig:additivity_fixed_state@cref}{{[figure][2][]2}{[1][10][]11}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}State algebra in practice}{11}{subsection.4.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Controlled screens for the final heads}{11}{subsection.4.5}\protected@file@percent }
+\newlabel{sec:screens}{{4.5}{11}{Controlled screens for the final heads}{subsection.4.5}{}}
+\newlabel{sec:screens@cref}{{[subsection][5][4]4.5}{[1][11][]11}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces FWP state-construction cost for device-resident point streams. (a) An incremental update processes one new 256-point frame, whereas reconstruction processes every accumulated point. Values are median wall-clock latency over seven interleaved trials of 30 repetitions for four streams; whiskers show the observed range. (b) The speedup grows with history length, while incremental and reconstructed states remain numerically equivalent.}}{12}{figure.3}\protected@file@percent }
+\newlabel{fig:streaming-efficiency}{{3}{12}{FWP state-construction cost for device-resident point streams. (a) An incremental update processes one new 256-point frame, whereas reconstruction processes every accumulated point. Values are median wall-clock latency over seven interleaved trials of 30 repetitions for four streams; whiskers show the observed range. (b) The speedup grows with history length, while incremental and reconstructed states remain numerically equivalent}{figure.3}{}}
+\newlabel{fig:streaming-efficiency@cref}{{[figure][3][]3}{[1][10][]12}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Controlled five-epoch screens. Positive changes favor the retained design.}}{12}{table.6}\protected@file@percent }
+\newlabel{tab:screens}{{6}{12}{Controlled five-epoch screens. Positive changes favor the retained design}{table.6}{}}
+\newlabel{tab:screens@cref}{{[table][6][]6}{[1][11][]12}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Discussion and Limitations}{12}{section.5}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Streaming state operations. (a) Maximum relative errors for append/merge, frame removal, and exponential decay, measured against independently reconstructed FWP states on 32 ShapeNetPart objects. (b) Ordinary addition increases the state magnitude with the number of frames, while exponential decay limits the influence of older frames without changing state size.}}{13}{figure.4}\protected@file@percent }
+\newlabel{fig:streaming-state-operations}{{4}{13}{Streaming state operations. (a) Maximum relative errors for append/merge, frame removal, and exponential decay, measured against independently reconstructed FWP states on 32 ShapeNetPart objects. (b) Ordinary addition increases the state magnitude with the number of frames, while exponential decay limits the influence of older frames without changing state size}{figure.4}{}}
+\newlabel{fig:streaming-state-operations@cref}{{[figure][4][]4}{[1][10][]13}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Worked distributed inference}{13}{subsection.5.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Where the representation is limited}{13}{subsection.5.2}\protected@file@percent }
+\newlabel{sec:bottleneck}{{5.2}{13}{Where the representation is limited}{subsection.5.2}{}}
+\newlabel{sec:bottleneck@cref}{{[subsection][2][5]5.2}{[1][13][]13}}
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Three-seed, five-epoch architecture screens. Bars show paired mean changes and whiskers show population standard deviations. Segmentation tests equal branch decoders, distinct radius initialization, and a common normalized spatial address. Classification tests residual versus concatenated branch summaries and the middle-radius learning rate.}}{14}{figure.5}\protected@file@percent }
+\newlabel{fig:architecture-ablation-main}{{5}{14}{Three-seed, five-epoch architecture screens. Bars show paired mean changes and whiskers show population standard deviations. Segmentation tests equal branch decoders, distinct radius initialization, and a common normalized spatial address. Classification tests residual versus concatenated branch summaries and the middle-radius learning rate}{figure.5}{}}
+\newlabel{fig:architecture-ablation-main@cref}{{[figure][5][]5}{[1][11][]14}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{14}{section.6}\protected@file@percent }
+\bibstyle{unsrt}
+\bibdata{references}
+\bibcite{qi2017pointnet}{1}
+\bibcite{qi2017pointnetplusplus}{2}
+\bibcite{zaheer2017deepsets}{3}
+\bibcite{jegou2010vlad}{4}
+\bibcite{arandjelovic2016netvlad}{5}
+\bibcite{uy2018pointnetvlad}{6}
+\bibcite{lee2019settransformer}{7}
+\bibcite{jaegle2022perceiverio}{8}
+\bibcite{katharopoulos2020transformers}{9}
+\bibcite{schlag2021linear}{10}
+\bibcite{liang2024pointmamba}{11}
+\bibcite{wu20153dshapenets}{12}
+\bibcite{yi2016scalable}{13}
+\bibcite{chang2015shapenet}{14}
+\gdef \@abspage@last{16}

@@ -53,7 +53,8 @@
 \bibinfo{author}{Qi, C.R.}, \bibinfo{author}{Yi, L.}, \bibinfo{author}{Su, H.},
   \bibinfo{author}{Guibas, L.J.}, \bibinfo{year}{2017}b.
 \newblock \bibinfo{title}{Pointnet++: Deep hierarchical feature learning on
-  point sets in a metric space}, in: \bibinfo{booktitle}{NeurIPS}.
+  point sets in a metric space}, in: \bibinfo{booktitle}{NeurIPS}, pp.
+  \bibinfo{pages}{5099--5108}.
 %Type = Inproceedings
 \bibitem[{Schlag et~al.(2021)Schlag, Irie and Schmidhuber}]{schlag2021linear}
 \bibinfo{author}{Schlag, I.}, \bibinfo{author}{Irie, K.},
@@ -87,6 +88,7 @@
   \bibinfo{author}{Ravanbakhsh, S.}, \bibinfo{author}{Poczos, B.},
   \bibinfo{author}{Salakhutdinov, R.}, \bibinfo{author}{Smola, A.J.},
   \bibinfo{year}{2017}.
-\newblock \bibinfo{title}{Deep sets}, in: \bibinfo{booktitle}{NeurIPS}.
+\newblock \bibinfo{title}{Deep sets}, in: \bibinfo{booktitle}{NeurIPS}, pp.
+  \bibinfo{pages}{3391--3401}.
 
 \end{thebibliography}
